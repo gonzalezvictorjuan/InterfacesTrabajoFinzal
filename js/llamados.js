@@ -92,12 +92,48 @@ $(document).ready(function() {
         });
 
 
-        // https://api.twitter.com/1.1/geo/search.json?accuracy=500000000m&granularity=city&lat=-37.3287999&long=-59.136716699999965 MIRAR!!!!!!!
-
         // "max_id": 799403049684865000,"next_results": "?max_id=799402009623404544&q=&geocode=-37.3287999%2C-59.136716699999965%2C50km&count=2&include_entities=1" Para ver los proximos tweets
-        /*{"text":"hace 800 años no escuchaba memphis boludo","entities":{"hashtags":[]},"user":{"location":"Zona sur ","description":"17. ♑   // haceme sonreir, cortame de oreja a oreja //"},"geo":null,"coordinates":null,"place":{"id":"4afa2757051c5192","name":"Buenos Aires","full_name":"Buenos Aires, Argentina","country_code":"AR","country":"Argentina","bounding_box":{"type":"Polygon","coordinates":[[[-63.39386,-41.035009],[-56.665836,-41.035009],[-56.665836,-33.260144],[-63.39386,-33.260144]]]},}*/
 
     }
+
+    function getTrendsHash(woeid) {
+        var params = {
+            id:woeid
+        };
+        cb.__call(
+            "trends_place",
+            params
+        ).then(function (data) {
+            console.log("Obtenidos los trends");
+            for (var i = 0; i < 50; i++) {
+                var trendName = data.reply[0].trends[i].name;
+                var trendVolume = data.reply[0].trends[i].tweet_volume;
+                console.log(trendName+" - "+trendVolume);
+            }
+        }, function (err) {
+            console.log("error al obtener los trends");
+        });
+    }
+
+    function getWOEIDByLat(latLngObj) {
+        var params = {
+            lat: latLngObj.lat(),
+            long: latLngObj.lng()
+        };
+        cb.__call(
+            "trends_closest",
+            params
+        ).then(function (data) {
+            console.log("Obtenidos el woeid en "+latLngObj.lat()+" - "+latLngObj.lng());
+             for (var i = 0; i < Object.keys(data.reply).length-1; i++) {//le resto uno porque el ultimo elemento de reply son boludeces de codebird
+                 var woeid = data.reply[i].woeid;
+                 getTrendsHash(woeid);
+             }
+        }, function (err) {
+            console.log("error al obtener los trends");
+        });
+    }
+
     //aca empieza lo de gmaps api
     var estilo = [{
         "elementType": "geometry",
@@ -421,6 +457,8 @@ $(document).ready(function() {
         console.log(map.getBounds().toString());
         //al mover el mapa busco tweets
         getTweetsByLocation(center, 20, 20);
+        //getTrendsHash(1);
+        getWOEIDByLat(center);
         /*var marker = new google.maps.Marker({
             position: center,
             animation: google.maps.Animation.BOUNCE,
