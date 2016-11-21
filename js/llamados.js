@@ -1,5 +1,6 @@
 $(document).ready(function () {
     //aca empieza lo de twitter api
+    var max_tweet_id = 0;
     var cb = new Codebird;
     cb.setConsumerKey("JvECVVUXHhuH7ISNotmFHKy2v", "FmxyFj3dh8zTUvPXDYAjXaKRGqipqYWnLexKBV6nRYpnPR9qg2");
     //logea como app
@@ -62,16 +63,19 @@ $(document).ready(function () {
             geocode: latLngObj.lat() + "," + latLngObj.lng() + "," + radioKm + "km",
             count: count
         };
+        if(max_tweet_id !== 0){
+          params.max_id = max_tweet_id;
+        }
         cb.__call(
             "search_tweets",
             params
         ).then(function (data) {
             console.log("Obtenidos los tweets en locacion");
+            max_tweet_id = data.reply.statuses[data.reply.statuses.length-1].id;
+            console.log(max_tweet_id);
             for (var tweet in data.reply.statuses) {//ciclo los tweets, statuses es un arreglo json de exactamente count tweets
-                //console.log(JSON.stringify(data.reply.statuses[tweet]));
                 var tweet = data.reply.statuses[tweet];
                 if(tweet.geo){
-                  console.log("uno con geocode");
                   crearMarcador(tweet.geo.coordinates[0], tweet.geo.coordinates[1]);
                 }
                 else{
@@ -336,7 +340,7 @@ $(document).ready(function () {
         var latlng = new google.maps.LatLng(lat, long);
 
         var mapOptions = {
-            zoom: 8,
+            zoom: 9,
             maxZoom: 16,
             minZoom: 2,
             styles: estilo,
@@ -349,10 +353,10 @@ $(document).ready(function () {
         map = new google.maps.Map(document.getElementById("zona_mapa"), mapOptions);
 
         /************Prueba MARCADORES***************/
-        /*Prueba marcador circulo
-        var myCity = new google.maps.Circle({
+        /*Prueba marcador circulo*/
+        /*var myCity = new google.maps.Circle({
         	center: latlng,
-        	radius: 500000,
+        	radius: 120000,
         	strokeColor: "#0000FF",
         	strokeOpacity: 0.8,
         	strokeWeight: 2,
