@@ -1,5 +1,6 @@
-$(document).ready(function () {
-    
+$(document).ready(function() {
+
+    var infos = [];
     //aca empieza lo de twitter api
     var max_tweet_id = 0;
     var cb = new Codebird;
@@ -9,9 +10,8 @@ $(document).ready(function () {
 
     function login() {
         cb.__call(
-            "oauth2_token",
-            {},
-            function (reply, err) {
+            "oauth2_token", {},
+            function(reply, err) {
                 var bearer_token;
                 if (err) {
                     console.log("Error: " + err.error);
@@ -20,7 +20,7 @@ $(document).ready(function () {
                     bearer_token = reply.access_token;
                 }
             }
-        ).then(function (data) {
+        ).then(function(data) {
             //doStuff();
         });
     }
@@ -28,20 +28,22 @@ $(document).ready(function () {
     //esta funcion esta asi de fea para debugear que habia en los tweets, basicamente extrae la info del json de cada tweet, llamada desde getTweetsByLocation
     function getTweetData(tweetJson) {
         var id = tweetJson.id;
-        var hashtagsArr = $.map(tweetJson.entities.hashtags, function (el) { return el; });//esto mapea un arreglo json a un arreglo javascript(al pedo porque no me sirvio de nada)
+        var hashtagsArr = $.map(tweetJson.entities.hashtags, function(el) {
+            return el;
+        }); //esto mapea un arreglo json a un arreglo javascript(al pedo porque no me sirvio de nada)
         var geo = tweetJson.geo;
         var coordinates = tweetJson.coordinates;
         var place = tweetJson.place;
 
         console.log("Tweet ID " + id);
-        for (var i = 0; i < hashtagsArr.length; i++) {//listo los hashtags
+        for (var i = 0; i < hashtagsArr.length; i++) { //listo los hashtags
             console.log("Tweet hash " + hashtagsArr[i].text);
         }
-        console.log("Tweet geo " + geo);//esto todavia no se que tiene, pero casi ningun tweet tiene esto
+        console.log("Tweet geo " + geo); //esto todavia no se que tiene, pero casi ningun tweet tiene esto
         console.log("Tweet coords " + coordinates);
         if (coordinates) {
-            var latlng = JSON.stringify(coordinates.coordinates).slice(1, -1);//le saco el primer y ultimo caracter que son [ y ]
-            var latlngArr = latlng.split(',');//parto la coma
+            var latlng = JSON.stringify(coordinates.coordinates).slice(1, -1); //le saco el primer y ultimo caracter que son [ y ]
+            var latlngArr = latlng.split(','); //parto la coma
             crearMarcador(latlngArr[0], latlngArr[1], hashtagsArr)
         }
         if (place) {
@@ -59,34 +61,33 @@ $(document).ready(function () {
     }
 
     function getTweetsByLocation(latLngObj, radioKm, count) {
-      var boolean = true;
+        var boolean = true;
         var params = {
             geocode: latLngObj.lat() + "," + latLngObj.lng() + "," + radioKm + "km",
             count: count
         };
-        if(max_tweet_id !== 0){
-          params.max_id = max_tweet_id;
+        if (max_tweet_id !== 0) {
+            params.max_id = max_tweet_id;
         }
         cb.__call(
             "search_tweets",
             params
-        ).then(function (data) {
+        ).then(function(data) {
             console.log("Obtenidos los tweets en locacion");
-            max_tweet_id = data.reply.statuses[data.reply.statuses.length-1].id;
+            max_tweet_id = data.reply.statuses[data.reply.statuses.length - 1].id;
             console.log(max_tweet_id);
-            for (var tweet in data.reply.statuses) {//ciclo los tweets, statuses es un arreglo json de exactamente count tweets
+            for (var tweet in data.reply.statuses) { //ciclo los tweets, statuses es un arreglo json de exactamente count tweets
                 var tweet = data.reply.statuses[tweet];
-                if(tweet.geo){
-                  crearMarcador(tweet.geo.coordinates[0], tweet.geo.coordinates[1],tweet);
-                }
-                else{
-                  var randomLoc = getRandomLocation(latLngObj.lat(), latLngObj.lng(), radioKm + 20000);//le sume mil para que no los tire tan cerca pero no sirvio de mucho..
-                  //alert(randomLoc.latitude+" "+randomLoc.longitude);
-                  crearMarcador(randomLoc.latitude, randomLoc.longitude,tweet);
-                  //getTweetData(data.reply.statuses[tweet]);
+                if (tweet.geo) {
+                    crearMarcador(tweet.geo.coordinates[0], tweet.geo.coordinates[1], tweet);
+                } else {
+                    var randomLoc = getRandomLocation(latLngObj.lat(), latLngObj.lng(), radioKm + 20000); //le sume mil para que no los tire tan cerca pero no sirvio de mucho..
+                    //alert(randomLoc.latitude+" "+randomLoc.longitude);
+                    crearMarcador(randomLoc.latitude, randomLoc.longitude, tweet);
+                    //getTweetData(data.reply.statuses[tweet]);
                 }
             }
-        }, function (err) {
+        }, function(err) {
             console.log("error al botener los tweets en locacion");
         });
 
@@ -280,7 +281,7 @@ $(document).ready(function () {
     var map;
     //supuestamente el radio dice que es en metros, pero si le tiro 100 metros me los tira adentro de una manzana...
     function getRandomLocation(latitude, longitude, radiusInMeters) {
-        var getRandomCoordinates = function (radius, uniform) {
+        var getRandomCoordinates = function(radius, uniform) {
             // Generate two random numbers
             var a = Math.random(),
                 b = Math.random();
@@ -379,7 +380,7 @@ $(document).ready(function () {
 
         /*************Prueba Posible frame para hashtag?*************/
         var iwindow = new google.maps.InfoWindow;
-        map.addListener('click', function (event) {
+        map.addListener('click', function(event) {
             iwindow.setContent("Hashtag?");
             iwindow.setPosition({
                 lat: event.latLng.lat(),
@@ -391,7 +392,7 @@ $(document).ready(function () {
         /***************Prueba Eventos**************/
         map.addListener('zoom_changed', accionCambioZoom);
         //map.addListener('bounds_changed', accionCambioBound);
-        map.addListener('dragend', accionCambioBound);//cambiado bounds_changed por este.
+        map.addListener('dragend', accionCambioBound); //cambiado bounds_changed por este.
         //google.maps.event.addListener(map, 'dragend', function() { alert('map dragged'); } );
         //map.addListener('center_changed',accionCambioCentro);
     }
@@ -441,21 +442,44 @@ $(document).ready(function () {
             position: new google.maps.LatLng(lat, lng),
             //animation: google.maps.Animation.BOUNCE,
             icon: 'twitter-logo.png'
-            // title: hashtags[0]
+                // title: hashtags[0]
         });
 
-        var iwindow = new google.maps.InfoWindow;
-        map.addListener('click', function (event) {
-            iwindow.setContent("Hashtag?");
-            iwindow.setPosition({
-                lat: event.latLng.lat(),
-                lng: event.latLng.lng()
-            });
-            iwindow.open(map);
-        });
+        var infowindow = new google.maps.InfoWindow;
+        google.maps.event.addListener(marker, 'click', (function(marker, tweet, infowindow) {
+            return function() {
+                /* close the previous info-window */
+                closeInfos();
+                var html = '';
+                html += "<img src="+tweet.user.profile_image_url+"></img>"
+                html += "<h3>"+tweet.user.name+"</h3>";
+                html += "<p>"+tweet.user.screen_name+"</p>";
+                html += "<p>"+tweet.created_at+"</p>";
+                html += "<p>"+tweet.text+"</p>";
+                for (hashtag in tweet.entities.hashtags){
+                  html += "<p>"+hashtag.text+"</p>";
+                }
+                infowindow.setContent(html);
+                infowindow.open(map, marker);
+                /* keep the handle, in order to close it on next click event */
+                infos[0] = infowindow;
+            };
+        })(marker, tweet, infowindow));
 
         marker.setMap(map);
     }
+
+    function closeInfos() {
+        if (infos.length > 0) {
+            /* detach the info-window from the marker ... undocumented in the API docs */
+            infos[0].set("marker", null);
+            /* and close it */
+            infos[0].close();
+            /* blank the array */
+            infos.length = 0;
+        }
+    }
+
     function accionCambioCentro() {
         var center = map.getCenter().toString(); // retorna objeto LatLng
         // https://developers.google.com/maps/documentation/javascript/reference#LatLng
