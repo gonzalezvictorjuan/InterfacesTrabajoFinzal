@@ -76,12 +76,12 @@ $(document).ready(function () {
             for (var tweet in data.reply.statuses) {//ciclo los tweets, statuses es un arreglo json de exactamente count tweets
                 var tweet = data.reply.statuses[tweet];
                 if(tweet.geo){
-                  crearMarcador(tweet.geo.coordinates[0], tweet.geo.coordinates[1]);
+                  crearMarcador(tweet.geo.coordinates[0], tweet.geo.coordinates[1],tweet);
                 }
                 else{
                   var randomLoc = getRandomLocation(latLngObj.lat(), latLngObj.lng(), radioKm + 20000);//le sume mil para que no los tire tan cerca pero no sirvio de mucho..
                   //alert(randomLoc.latitude+" "+randomLoc.longitude);
-                  crearMarcador(randomLoc.latitude, randomLoc.longitude);
+                  crearMarcador(randomLoc.latitude, randomLoc.longitude,tweet);
                   //getTweetData(data.reply.statuses[tweet]);
                 }
             }
@@ -432,9 +432,9 @@ $(document).ready(function () {
         //console.log(center);
     }
 
-    function crearMarcador(lat, lng, hashtags) {
+    function crearMarcador(lat, lng, tweet) {
         //alert("marker " + lat + " " + lng);
-        console.log("entro a crear marker");
+        console.log("Se crea un marcador");
         // var cords = {lat: lat, lng: lng}
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(lat, lng),
@@ -442,8 +442,18 @@ $(document).ready(function () {
             icon: 'twitter-logo.png'
             // title: hashtags[0]
         });
+
+        var iwindow = new google.maps.InfoWindow;
+        map.addListener('click', function (event) {
+            iwindow.setContent("Hashtag?");
+            iwindow.setPosition({
+                lat: event.latLng.lat(),
+                lng: event.latLng.lng()
+            });
+            iwindow.open(map);
+        });
+
         marker.setMap(map);
-        console.log("salio de crear marker");
     }
     function accionCambioCentro() {
         var center = map.getCenter().toString(); // retorna objeto LatLng
