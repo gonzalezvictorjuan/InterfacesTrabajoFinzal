@@ -1,0 +1,14 @@
+//tpespecial 4x4 o 16x16, que pueda ser cualquiera de las 2, partir la imagen y reordenarla
+//2grillas, una con la imagen desordenada, y la otra que arrastraremos las piezas para armar el rompecabezas
+//detectar el cuadrado a mover con mouseDown y guardar el id de la imagen en algun var para que cuando la peguemos se reemplaze
+//podria ser un arreglo con todos los valores y recorrerlo para saber cual es el que se movio y guardarlo
+//mouseMove para reconocer cada vez que se mueva el mouse solo se mantendra si el id guardado no es el predefinido (-1)
+// if(imageid!=-1) hacer algo
+//para saber donde repintar se usa el mouseUp con un if(imageid!=-1) y verificar si lo soltamos en la celda de la grilla armable
+//para saber si toda la imagen esta correctamente colocada, los ids tienen que estar ordenados
+
+//pasos
+//1 - click en cuadrado - chequear si fue clickeado
+//2 - click en cuadrado - arrastrarlo y repintar
+//3 - click en cuadrado - arrastrarlo y repintarlo, pero que no esten los demas
+//4 - click en cuadrado - arrastrarlo y pintarlo en el cuadrado destino

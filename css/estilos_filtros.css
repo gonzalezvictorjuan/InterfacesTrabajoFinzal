@@ -1,0 +1,20 @@
+#canvasOriginal, #canvasFiltrado {
+    border: solid #000000 1px; /*A tomar en cuenta*/
+}
+
+/*Para solventar problemas de float usar overflow:auto; en el div que contenga los elementos que usen float*/
+
+#cuadrado{
+	width: 100px;
+	height: 100px;
+	background-color: #C8C8C8;
+	margin-left: 150px;
+	margin-top: 50px;
+	padding: 10px;
+}
+
+#cuadro{
+	width: 1000px;
+	height: 800px;
+	
+}
