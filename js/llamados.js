@@ -414,17 +414,6 @@ $(document).ready(function() {
         var marker = new google.maps.Marker({position: latlng});
         marker.setMap(map);*/
 
-        /*************Prueba Posible frame para hashtag?*************/
-        var iwindow = new google.maps.InfoWindow;
-        map.addListener('click', function(event) {
-            iwindow.setContent("Hashtag?");
-            iwindow.setPosition({
-                lat: event.latLng.lat(),
-                lng: event.latLng.lng()
-            });
-            iwindow.open(map);
-        });
-
         /***************Prueba Eventos**************/
         map.addListener('zoom_changed', accionCambioZoom);
         //map.addListener('bounds_changed', accionCambioBound);
@@ -459,13 +448,6 @@ $(document).ready(function() {
         getTweetsByLocation(center, 20, 20);
         //getTrendsHash(1);
         getWOEIDByLat(center);
-        /*var marker = new google.maps.Marker({
-            position: center,
-            animation: google.maps.Animation.BOUNCE,
-            icon: 'twitter-logo.png'
-        });
-        marker.setMap(map);
-        */
 
         //var bound = map.getBounds().toString(); // retorna objeto LatLngBounds
         // https://developers.google.com/maps/documentation/javascript/reference#LatLngBounds
