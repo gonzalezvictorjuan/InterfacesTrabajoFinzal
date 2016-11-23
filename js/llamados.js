@@ -454,6 +454,30 @@ $(document).ready(function() {
         //console.log(center);
     }
 
+    function tweetPopup(tweet, map, marker){
+      var infowindow = new google.maps.InfoWindow;
+      google.maps.event.addListener(marker, 'click', (function(marker, tweet, infowindow) {
+          return function() {
+              /* close the previous info-window */
+              closeInfos();
+
+              var urlTweet = "https%3A%2F%2Ftwitter.com%2FInterior%2Fstatus%2F" + tweet.id_str;
+
+              $.ajax({
+                  url: "https://publish.twitter.com/oembed?url="+urlTweet,
+                  dataType: "jsonp",
+                  success: function(data){
+                    infowindow.setContent(data.html);
+                    infowindow.open(map, marker);
+                    twttr.widgets.load();
+                    infos[0] = infowindow;
+                  }
+              });
+
+          };
+      })(marker, tweet, infowindow));
+    }
+
     function crearMarcador(lat, lng, tweet) {
         //alert("marker " + lat + " " + lng);
         console.log("Se crea un marcador");
@@ -465,26 +489,7 @@ $(document).ready(function() {
                 // title: hashtags[0]
         });
 
-        var infowindow = new google.maps.InfoWindow;
-        google.maps.event.addListener(marker, 'click', (function(marker, tweet, infowindow) {
-            return function() {
-                /* close the previous info-window */
-                closeInfos();
-                var html = '';
-                html += "<img src="+tweet.user.profile_image_url+"></img>"
-                html += "<h3>"+tweet.user.name+"</h3>";
-                html += "<p>"+tweet.user.screen_name+"</p>";
-                html += "<p>"+tweet.created_at+"</p>";
-                html += "<p>"+tweet.text+"</p>";
-                for (hashtag in tweet.entities.hashtags){
-                  html += "<p>"+hashtag.text+"</p>";
-                }
-                infowindow.setContent(html);
-                infowindow.open(map, marker);
-                /* keep the handle, in order to close it on next click event */
-                infos[0] = infowindow;
-            };
-        })(marker, tweet, infowindow));
+        tweetPopup(tweet, map, marker);
 
         marker.setMap(map);
     }
