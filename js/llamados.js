@@ -368,7 +368,6 @@ $(document).ready(function() {
     }
 
     function showPosition(position) {
-
         lat = position.coords.latitude;
         long = position.coords.longitude;
         initialize();
@@ -389,7 +388,7 @@ $(document).ready(function() {
         }
 
         map = new google.maps.Map(document.getElementById("zona_mapa"), mapOptions);
-
+        
         /************Prueba MARCADORES***************/
         /*Prueba marcador circulo*/
         /*var myCity = new google.maps.Circle({
@@ -445,14 +444,39 @@ $(document).ready(function() {
         console.log(center.lng());
         console.log(map.getBounds().toString());
         //al mover el mapa busco tweets
-        getTweetsByLocation(center, 20, 20);
+        //getTweetsByLocation(center, 20, 20); DESCOMENTAR DESPUES
         //getTrendsHash(1);
         getWOEIDByLat(center);
+        searchCity(map);
 
         //var bound = map.getBounds().toString(); // retorna objeto LatLngBounds
         // https://developers.google.com/maps/documentation/javascript/reference#LatLngBounds
         //console.log(center);
     }
+    
+    function searchCity(map){
+				var north = map.getBounds().getNorthEast().lat();
+				var east = map.getBounds().getNorthEast().lng();
+				var south = map.getBounds().getSouthWest().lat();
+				var west = map.getBounds().getSouthWest().lng();
+		              $.ajax({
+                  url: "http://api.geonames.org/citiesJSON?north="+north+"&south="+south+"&east="+east+"&west="+west+"&username=interfacesTP",
+                  dataType: "jsonp",
+                  success: function(data){
+					  console.log(data);
+					  for(var city in data.geonames){
+						var city = data.geonames[city];
+						var cityCenter = new google.maps.LatLng({lat: city.lat, lng: city.lng}); 
+						getTweetsByLocation(cityCenter, 20, 20);
+						/*var marker = new google.maps.Marker({
+							position: new google.maps.LatLng(city.lat, city.lng),
+							icon: 'twitter-logo.png'
+						});
+						marker.setMap(map);*/
+					}
+                  }
+              });
+	}
 
     function tweetPopup(tweet, map, marker){
       var infowindow = new google.maps.InfoWindow;
@@ -508,6 +532,7 @@ $(document).ready(function() {
     function accionCambioCentro() {
         var center = map.getCenter().toString(); // retorna objeto LatLng
         // https://developers.google.com/maps/documentation/javascript/reference#LatLng
+                console.log(map.getBounds().toString());
         console.log(center);
     }
 
