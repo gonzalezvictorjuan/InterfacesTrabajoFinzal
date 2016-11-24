@@ -122,19 +122,19 @@ function tweetPopup(tweet, map, marker) {
     var infowindow = new google.maps.InfoWindow;
     google.maps.event.addListener(marker, 'click', (function(marker, tweet, infowindow) {
         return function() {
-  
+
             closeInfos();
             map.setCenter(marker.getPosition());
 
             var urlTweet = "https%3A%2F%2Ftwitter.com%2FInterior%2Fstatus%2F" + tweet.id_str;
-
             $.ajax({
                 url: "https://publish.twitter.com/oembed?url=" + urlTweet + "&hide_media=true&omit_script=true",
                 dataType: "jsonp",
                 success: function(data) {
                     infowindow.setContent(data.html);
                     infowindow.open(map, marker);
-                    twttr.widgets.load();
+                    var iwindow = document.getElementsByClassName("gm-style-iw");
+                    twttr.widgets.load(iwindow);
                     infos[0] = infowindow;
                 }
             });
