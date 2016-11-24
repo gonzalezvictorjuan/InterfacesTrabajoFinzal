@@ -30,7 +30,7 @@ $(document).ready(function() {
         var id = tweetJson.id;
         var hashtagsArr = $.map(tweetJson.entities.hashtags, function(el) {
             return el;
-        }); //esto mapea un arreglo json a un arreglo javascript(al pedo porque no me sirvio de nada)
+        }); //esto mapea un arreglo json a un arreglo javascript
         var geo = tweetJson.geo;
         var coordinates = tweetJson.coordinates;
         var place = tweetJson.place;
@@ -81,8 +81,7 @@ $(document).ready(function() {
                 if (tweet.geo) {
                     crearMarcador(tweet.geo.coordinates[0], tweet.geo.coordinates[1], tweet);
                 } else {
-                    var randomLoc = getRandomLocation(latLngObj.lat(), latLngObj.lng(), radioKm + 20000); //le sume mil para que no los tire tan cerca pero no sirvio de mucho..
-                    //alert(randomLoc.latitude+" "+randomLoc.longitude);
+                    var randomLoc = getRandomLocation(latLngObj.lat(), latLngObj.lng(), radioKm + 20000);
                     crearMarcador(randomLoc.latitude, randomLoc.longitude, tweet);
                     //getTweetData(data.reply.statuses[tweet]);
                 }
@@ -91,26 +90,23 @@ $(document).ready(function() {
             console.log("error al botener los tweets en locacion");
         });
 
-
-        // "max_id": 799403049684865000,"next_results": "?max_id=799402009623404544&q=&geocode=-37.3287999%2C-59.136716699999965%2C50km&count=2&include_entities=1" Para ver los proximos tweets
-
     }
 
     function getTrendsHash(woeid) {
         var params = {
-            id:woeid
+            id: woeid
         };
         cb.__call(
             "trends_place",
             params
-        ).then(function (data) {
+        ).then(function(data) {
             console.log("Obtenidos los trends");
             for (var i = 0; i < 50; i++) {
                 var trendName = data.reply[0].trends[i].name;
                 var trendVolume = data.reply[0].trends[i].tweet_volume;
-                console.log(trendName+" - "+trendVolume);
+                console.log(trendName + " - " + trendVolume);
             }
-        }, function (err) {
+        }, function(err) {
             console.log("error al obtener los trends");
         });
     }
@@ -123,13 +119,13 @@ $(document).ready(function() {
         cb.__call(
             "trends_closest",
             params
-        ).then(function (data) {
-            console.log("Obtenidos el woeid en "+latLngObj.lat()+" - "+latLngObj.lng());
-             for (var i = 0; i < Object.keys(data.reply).length-1; i++) {//le resto uno porque el ultimo elemento de reply son boludeces de codebird
-                 var woeid = data.reply[i].woeid;
-                 getTrendsHash(woeid);
-             }
-        }, function (err) {
+        ).then(function(data) {
+            console.log("Obtenidos el woeid en " + latLngObj.lat() + " - " + latLngObj.lng());
+            for (var i = 0; i < Object.keys(data.reply).length - 1; i++) {
+                var woeid = data.reply[i].woeid;
+                getTrendsHash(woeid);
+            }
+        }, function(err) {
             console.log("error al obtener los trends");
         });
     }
@@ -388,7 +384,7 @@ $(document).ready(function() {
         }
 
         map = new google.maps.Map(document.getElementById("zona_mapa"), mapOptions);
-        
+
         /************Prueba MARCADORES***************/
         /*Prueba marcador circulo*/
         /*var myCity = new google.maps.Circle({
@@ -416,8 +412,7 @@ $(document).ready(function() {
         /***************Prueba Eventos**************/
         map.addListener('zoom_changed', accionCambioZoom);
         //map.addListener('bounds_changed', accionCambioBound);
-        map.addListener('dragend', accionCambioBound); //cambiado bounds_changed por este.
-        //google.maps.event.addListener(map, 'dragend', function() { alert('map dragged'); } );
+        map.addListener('dragend', accionCambioBound);
         //map.addListener('center_changed',accionCambioCentro);
     }
 
@@ -440,70 +435,59 @@ $(document).ready(function() {
 
         var center = map.getCenter();
         console.log(center);
-        console.log(center.lat());
-        console.log(center.lng());
-        console.log(map.getBounds().toString());
+        console.log(map.getBounds());
         //al mover el mapa busco tweets
-        //getTweetsByLocation(center, 20, 20); DESCOMENTAR DESPUES
         //getTrendsHash(1);
         getWOEIDByLat(center);
         searchCity(map);
-
-        //var bound = map.getBounds().toString(); // retorna objeto LatLngBounds
-        // https://developers.google.com/maps/documentation/javascript/reference#LatLngBounds
-        //console.log(center);
     }
-    
-    function searchCity(map){
-				var north = map.getBounds().getNorthEast().lat();
-				var east = map.getBounds().getNorthEast().lng();
-				var south = map.getBounds().getSouthWest().lat();
-				var west = map.getBounds().getSouthWest().lng();
-		              $.ajax({
-                  url: "http://api.geonames.org/citiesJSON?north="+north+"&south="+south+"&east="+east+"&west="+west+"&username=interfacesTP",
-                  dataType: "jsonp",
-                  success: function(data){
-					  console.log(data);
-					  for(var city in data.geonames){
-						var city = data.geonames[city];
-						var cityCenter = new google.maps.LatLng({lat: city.lat, lng: city.lng}); 
-						getTweetsByLocation(cityCenter, 20, 20);
-						/*var marker = new google.maps.Marker({
-							position: new google.maps.LatLng(city.lat, city.lng),
-							icon: 'twitter-logo.png'
-						});
-						marker.setMap(map);*/
-					}
-                  }
-              });
-	}
 
-    function tweetPopup(tweet, map, marker){
-      var infowindow = new google.maps.InfoWindow;
-      google.maps.event.addListener(marker, 'click', (function(marker, tweet, infowindow) {
-          return function() {
-              /* close the previous info-window */
-              closeInfos();
+    function searchCity(map) {
+        var north = map.getBounds().getNorthEast().lat();
+        var east = map.getBounds().getNorthEast().lng();
+        var south = map.getBounds().getSouthWest().lat();
+        var west = map.getBounds().getSouthWest().lng();
+        $.ajax({
+            url: "http://api.geonames.org/citiesJSON?north=" + north + "&south=" + south + "&east=" + east + "&west=" + west + "&username=interfacesTP",
+            dataType: "jsonp",
+            success: function(data) {
+                for (var city in data.geonames) {
+                    var city = data.geonames[city];
+                    var cityCenter = new google.maps.LatLng({
+                        lat: city.lat,
+                        lng: city.lng
+                    });
+                    getTweetsByLocation(cityCenter, 20, 20);
+                }
+            }
+        });
+    }
 
-              var urlTweet = "https%3A%2F%2Ftwitter.com%2FInterior%2Fstatus%2F" + tweet.id_str;
+    function tweetPopup(tweet, map, marker) {
+        var infowindow = new google.maps.InfoWindow;
+        google.maps.event.addListener(marker, 'click', (function(marker, tweet, infowindow) {
+            return function() {
 
-              $.ajax({
-                  url: "https://publish.twitter.com/oembed?url="+urlTweet,
-                  dataType: "jsonp",
-                  success: function(data){
-                    infowindow.setContent(data.html);
-                    infowindow.open(map, marker);
-                    twttr.widgets.load();
-                    infos[0] = infowindow;
-                  }
-              });
+                closeInfos();
 
-          };
-      })(marker, tweet, infowindow));
+                var urlTweet = "https%3A%2F%2Ftwitter.com%2FInterior%2Fstatus%2F" + tweet.id_str;
+
+                $.ajax({
+                    url: "https://publish.twitter.com/oembed?url=" + urlTweet,
+                    dataType: "jsonp",
+                    success: function(data) {
+                        infowindow.setContent(data.html);
+                        infowindow.open(map, marker);
+                        twttr.widgets.load();
+                        infos[0] = infowindow;
+                    }
+                });
+
+            };
+        })(marker, tweet, infowindow));
     }
 
     function crearMarcador(lat, lng, tweet) {
-        //alert("marker " + lat + " " + lng);
         console.log("Se crea un marcador");
         // var cords = {lat: lat, lng: lng}
         var marker = new google.maps.Marker({
@@ -520,19 +504,14 @@ $(document).ready(function() {
 
     function closeInfos() {
         if (infos.length > 0) {
-            /* detach the info-window from the marker ... undocumented in the API docs */
             infos[0].set("marker", null);
-            /* and close it */
             infos[0].close();
-            /* blank the array */
             infos.length = 0;
         }
     }
 
     function accionCambioCentro() {
-        var center = map.getCenter().toString(); // retorna objeto LatLng
-        // https://developers.google.com/maps/documentation/javascript/reference#LatLng
-                console.log(map.getBounds().toString());
+        var center = map.getCenter().toString();
         console.log(center);
     }
 
