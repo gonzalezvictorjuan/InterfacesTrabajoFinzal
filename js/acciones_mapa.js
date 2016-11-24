@@ -1,49 +1,6 @@
 var lat;
 var long;
 var map;
-//supuestamente el radio dice que es en metros, pero si le tiro 100 metros me los tira adentro de una manzana...
-function getRandomLocation(latitude, longitude, radiusInMeters) {
-    var getRandomCoordinates = function(radius, uniform) {
-        // Generate two random numbers
-        var a = Math.random(),
-            b = Math.random();
-
-        // Flip for more uniformity.
-        if (uniform) {
-            if (b < a) {
-                var c = b;
-                b = a;
-                a = c;
-            }
-        }
-
-        // It's all triangles.
-        return [
-            b * radius * Math.cos(2 * Math.PI * a / b),
-            b * radius * Math.sin(2 * Math.PI * a / b)
-        ];
-    };
-
-    var randomCoordinates = getRandomCoordinates(radiusInMeters, true);
-
-    // Earths radius in meters via WGS 84 model.
-    var earth = 6378137;
-
-    // Offsets in meters.
-    var northOffset = randomCoordinates[0],
-        eastOffset = randomCoordinates[1];
-
-    // Offset coordinates in radians.
-    var offsetLatitude = northOffset / earth,
-        offsetLongitude = eastOffset / (earth * Math.cos(Math.PI * (latitude / 180)));
-
-    // Offset position in decimal degrees.
-    return {
-        latitude: latitude + (offsetLatitude * (180 / Math.PI)),
-        longitude: longitude + (offsetLongitude * (180 / Math.PI))
-    }
-};
-
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -145,11 +102,17 @@ function searchCity(map) {
         success: function(data) {
             for (var city in data.geonames) {
                 var city = data.geonames[city];
+                //var radio = (Math.sqrt(city.population) / 10); UNA FORMA
+                var radio = ((city.population) *0.025)/ 100;
+                if (radio === 0){
+                  radio = 5;
+                }
+                console.log(data);
                 var cityCenter = new google.maps.LatLng({
                     lat: city.lat,
                     lng: city.lng
                 });
-                getTweetsByLocation(cityCenter, 20, 20);
+                getTweetsByLocation(cityCenter, radio, 10);
             }
         }
     });
