@@ -1,6 +1,7 @@
 var lat;
 var long;
 var map;
+var maxCityCount = 15;
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -97,17 +98,16 @@ function searchCity(map) {
     var south = map.getBounds().getSouthWest().lat();
     var west = map.getBounds().getSouthWest().lng();
     $.ajax({
-        url: "http://api.geonames.org/citiesJSON?north=" + north + "&south=" + south + "&east=" + east + "&west=" + west + "&username=interfacesTP",
+        url: "http://api.geonames.org/citiesJSON?north=" + north + "&south=" + south + "&east=" + east + "&west=" + west + "&maxRows=" + maxCityCount + "&username=interfacesTP",
         dataType: "jsonp",
         success: function(data) {
             for (var city in data.geonames) {
                 var city = data.geonames[city];
                 //var radio = (Math.sqrt(city.population) / 10); UNA FORMA
-                var radio = ((city.population) *0.025)/ 100;
-                if (radio === 0){
-                  radio = 5;
+                var radio = ((city.population) * 0.025) / 100;
+                if (radio === 0) {
+                    radio = 5;
                 }
-                console.log(data);
                 var cityCenter = new google.maps.LatLng({
                     lat: city.lat,
                     lng: city.lng
@@ -128,7 +128,7 @@ function tweetPopup(tweet, map, marker) {
             var urlTweet = "https%3A%2F%2Ftwitter.com%2FInterior%2Fstatus%2F" + tweet.id_str;
 
             $.ajax({
-                url: "https://publish.twitter.com/oembed?url=" + urlTweet,
+                url: "https://publish.twitter.com/oembed?url=" + urlTweet + "&hide_media=true&omit_script=true",
                 dataType: "jsonp",
                 success: function(data) {
                     infowindow.setContent(data.html);

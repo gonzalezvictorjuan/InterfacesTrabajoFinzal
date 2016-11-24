@@ -74,13 +74,14 @@
             console.log("Obtenidos los tweets en locacion");
             max_tweet_id = data.reply.statuses[data.reply.statuses.length - 1].id;
             console.log(max_tweet_id);
+            var limit = data.rate.remaining;
+            calcularMaxCityCount(limit);
             for (var tweet in data.reply.statuses) { //ciclo los tweets, statuses es un arreglo json de exactamente count tweets
                 var tweet = data.reply.statuses[tweet];
                 if (tweet.geo) {
                     crearMarcador(tweet.geo.coordinates[0], tweet.geo.coordinates[1], tweet);
                 } else {
-                    var radioMetros = ((radioKm * 1000) * 30)/100;
-                    console.log(radioMetros);
+                    var radioMetros = ((radioKm * 1000) * 30) / 100;
                     var randomLoc = getRandomLocation(latLngObj.lat(), latLngObj.lng(), radioMetros);
                     crearMarcador(randomLoc.latitude, randomLoc.longitude, tweet);
                     //getTweetData(data.reply.statuses[tweet]);
@@ -129,45 +130,3 @@
             console.log("error al obtener los trends");
         });
     }
-
-    function getRandomLocation(latitude, longitude, radiusInMeters) {
-        var getRandomCoordinates = function(radius, uniform) {
-            // Generate two random numbers
-            var a = Math.random(),
-                b = Math.random();
-
-            // Flip for more uniformity.
-            if (uniform) {
-                if (b < a) {
-                    var c = b;
-                    b = a;
-                    a = c;
-                }
-            }
-
-            // It's all triangles.
-            return [
-                b * radius * Math.cos(2 * Math.PI * a / b),
-                b * radius * Math.sin(2 * Math.PI * a / b)
-            ];
-        };
-
-        var randomCoordinates = getRandomCoordinates(radiusInMeters, true);
-
-        // Earths radius in meters via WGS 84 model.
-        var earth = 6378137;
-
-        // Offsets in meters.
-        var northOffset = randomCoordinates[0],
-            eastOffset = randomCoordinates[1];
-
-        // Offset coordinates in radians.
-        var offsetLatitude = northOffset / earth,
-            offsetLongitude = eastOffset / (earth * Math.cos(Math.PI * (latitude / 180)));
-
-        // Offset position in decimal degrees.
-        return {
-            latitude: latitude + (offsetLatitude * (180 / Math.PI)),
-            longitude: longitude + (offsetLongitude * (180 / Math.PI))
-        }
-    };
