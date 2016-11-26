@@ -128,7 +128,7 @@ function tweetPopup(tweet, map, marker) {
 
             var urlTweet = "https%3A%2F%2Ftwitter.com%2FInterior%2Fstatus%2F" + tweet.id_str;
             $.ajax({
-                url: "https://publish.twitter.com/oembed?url=" + urlTweet + "&hide_media=true&omit_script=true",
+                url: "https://publish.twitter.com/oembed?url=" + urlTweet + "&hide_media=true&hide_thread=true&omit_script=true",
                 dataType: "jsonp",
                 success: function(data) {
                     infowindow.setContent(data.html);

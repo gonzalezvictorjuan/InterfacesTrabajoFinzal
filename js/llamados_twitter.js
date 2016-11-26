@@ -1,3 +1,5 @@
+    var maxIdTweetCity = [];
+
     var infos = [];
     //aca empieza lo de twitter api
     var max_tweet_id = 0;
@@ -58,22 +60,42 @@
 
     }
 
+    function buscarCiudadMaxId(latLng, id) {
+        var resp;
+        for (var i = 0; i < maxIdTweetCity.length; i++) {
+            var city = maxIdTweetCity[i];
+            if ((latLng.lat() === city.latLng.lat) && (latLng.lng() === city.latLng.lng)) {
+                resp = maxIdTweetCity[i];
+            }
+        }
+        return resp;
+    }
+
     function getTweetsByLocation(latLngObj, radioKm, count) {
         var boolean = true;
         var params = {
+            q: "-RT",
             geocode: latLngObj.lat() + "," + latLngObj.lng() + "," + radioKm + "km",
             count: count
         };
-        if (max_tweet_id !== 0) {
-            params.max_id = max_tweet_id;
+        var respuesta = buscarCiudadMaxId(latLngObj);
+        if (typeof respuesta !== 'undefined') {
+            params.since_id = respuesta.max_id;
+        } else {
+            var place = {};
+            place.latLng = latLngObj.toJSON();
+            place.max_id = 0;
+            respuesta = place;
+            maxIdTweetCity.push(place);
         }
         cb.__call(
             "search_tweets",
             params
         ).then(function(data) {
             console.log("Obtenidos los tweets en locacion");
-            max_tweet_id = data.reply.statuses[data.reply.statuses.length - 1].id;
-            console.log(max_tweet_id);
+            if(typeof data.reply.search_metadata !== 'undefined'){
+              respuesta.max_id = data.reply.search_metadata.max_id;
+            }
             var limit = data.rate.remaining;
             calcularMaxCityCount(limit);
             for (var tweet in data.reply.statuses) { //ciclo los tweets, statuses es un arreglo json de exactamente count tweets
