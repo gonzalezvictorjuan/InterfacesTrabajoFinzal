@@ -74,14 +74,20 @@ function actualizarDatos() {
     var zoom = map.getZoom();
     console.log(zoom);
     if (zoom < 8) {
+        ocultarTweetCount();
         console.log("trends");
         mostrarTrends();
         ocultarTweets();
         buscarTrends();
     } else {
-        mostrarTweets();
         ocultarTrends();
         buscarTweets();
+        if (zoom >= 8 && zoom <= 10) {
+            ocultarTweets();
+        } else {
+            ocultarTweetCount();
+            mostrarTweets();
+        }
     }
 }
 
@@ -123,6 +129,14 @@ function mostrarTweets() {
     tweetMarkers.forEach(function(marker) {
         marker.setVisible(true);
     }, this);
+}
+
+function ocultarTweetCount() {
+    for (var i = 0; i < CityList.length; i++) {
+        var city = CityList[i];
+        var marker = city.tweetCountMarker;
+        marker.setVisible(false);
+    }
 }
 
 function ocultarTrends() {
@@ -194,6 +208,12 @@ function tweetPopup(tweet, map, marker) {
 }
 
 function crearMarcadorTrend(trendName, trendVolume, latLngObj, radio) {
+    var cssClass = "plagioTrendsMapChico";
+    if (trendVolume > 15000)
+        cssClass = "plagioTrendsMapMediano"
+    if (trendVolume > 50000)
+        cssClass = "plagioTrendsMapGrande"
+
     var randloc = getRandomLocation(latLngObj.lat(), latLngObj.lng(), radio * 10);
     var marker = new MarkerWithLabel({
         position: new google.maps.LatLng(randloc.latitude, randloc.longitude),
@@ -204,15 +224,15 @@ function crearMarcadorTrend(trendName, trendVolume, latLngObj, radio) {
             path: google.maps.SymbolPath.CIRCLE, //el path es obligatorio, pero da igual lo que pongamos porque no se va a ver.
             scale: 0 //tamaño del marker real, le pongo 0 y así no se ve.
         },
-        labelContent: trendName + " - " + trendVolume,
+        labelContent: trendName, // + " - " + trendVolume + cssClass,
         labelAnchor: new google.maps.Point(22, 0),
-        labelClass: "plagioTrendsMap" //"labels" // the CSS class for the label
+        labelClass: cssClass //"labels" // the CSS class for the label
     });
     trendMarkers.push(marker);
     marker.setMap(map);
 }
 
-function crearMarcador(lat, lng, tweet) {
+function crearMarcador(lat, lng, tweet, city) {
     //console.log("Se crea un marcador");
     // var cords = {lat: lat, lng: lng}
     var marker = new google.maps.Marker({
@@ -221,11 +241,13 @@ function crearMarcador(lat, lng, tweet) {
         icon: 'twitter-logo.png'
             // title: hashtags[0]
     });
-
+    city.tweetMarker.push(marker);
+    console.log(city);
+    marker.setMap(map);
     tweetMarkers.push(marker);
     tweetPopup(tweet, map, marker);
-    if (map.getZoom() >= 8)
-        marker.setMap(map);
+    if ((map.getZoom() >= 8) && (map.getZoom() <= 10))
+        marker.setVisible(false);
 }
 
 function closeInfos() {
@@ -236,9 +258,28 @@ function closeInfos() {
     }
 }
 
-function accionCambioCentro() {
-    var center = map.getCenter().toString();
-    console.log(center);
+function crearMarkerTweetCount(city) {
+    var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(city.latLng.lat, city.latLng.lng),
+        icon: 'twitter-logo.png'
+    });
+    city.tweetCountMarker = marker;
+    city.tweetCountMarker.setMap(map);
+    city.tweetCountMarker.setVisible(false);
+}
+
+function actualizarContador(city) {
+    if (map.getZoom() < 8 || map.getZoom() > 10) {
+        city.tweetCountMarker.setVisible(false);
+    } else {
+        var count = city.tweetMarker.length;
+        if (count > 0) {
+            city.tweetCountMarker.setLabel(count.toString());
+            city.tweetCountMarker.setVisible(true);
+        } else {
+            city.tweetCountMarker.setVisible(false);
+        }
+    }
 }
 
 google.maps.event.addDomListener(window, 'load', getLocation);

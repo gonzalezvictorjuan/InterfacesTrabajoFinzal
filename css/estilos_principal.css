@@ -12,8 +12,28 @@
     white-space: nowrap;
 }
 
-.plagioTrendsMap {
+.plagioTrendsMapChico {
+    opacity: 0.62;
+    font-weight: bold;
+    background-color: #222;
+    border: 1px solid #333;
+    border-radius: 1px;
+    color: #fff;
+}
+
+.plagioTrendsMapGrande {
+    font-size: 20px;
+    opacity: 0.72;
+    font-weight: bold;
+    background-color: #222;
+    border: 1px solid #333;
+    border-radius: 1px;
+    color: #fff;
+}
+
+.plagioTrendsMapMediano {
     opacity: 0.82;
+    font-size: 10px;
     font-weight: bold;
     background-color: #222;
     border: 1px solid #333;

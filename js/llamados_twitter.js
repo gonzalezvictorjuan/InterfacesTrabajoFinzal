@@ -1,4 +1,4 @@
-    var maxIdTweetCity = [];
+    var CityList = [];
 
     var infos = [];
     var woeIDS = [];
@@ -63,10 +63,10 @@
 
     function buscarCiudadMaxId(latLng, id) {
         var resp;
-        for (var i = 0; i < maxIdTweetCity.length; i++) {
-            var city = maxIdTweetCity[i];
+        for (var i = 0; i < CityList.length; i++) {
+            var city = CityList[i];
             if ((latLng.lat() === city.latLng.lat) && (latLng.lng() === city.latLng.lng)) {
-                resp = maxIdTweetCity[i];
+                resp = CityList[i];
             }
         }
         return resp;
@@ -86,30 +86,34 @@
             var place = {};
             place.latLng = latLngObj.toJSON();
             place.max_id = 0;
+            place.tweetMarker = [];
+            place.tweetCountMarker = null;
             respuesta = place;
-            maxIdTweetCity.push(place);
+            CityList.push(place);
+            crearMarkerTweetCount(respuesta);
         }
         cb.__call(
             "search_tweets",
             params
         ).then(function(data) {
             console.log("Obtenidos los tweets en locacion");
-            if (typeof data.reply.search_metadata !== 'undefined') {
-                respuesta.max_id = data.reply.search_metadata.max_id;
-            }
-            var limit = data.rate.remaining;
-            calcularMaxCityCount(limit);
             for (var tweet in data.reply.statuses) { //ciclo los tweets, statuses es un arreglo json de exactamente count tweets
                 var tweet = data.reply.statuses[tweet];
                 if (tweet.geo) {
-                    crearMarcador(tweet.geo.coordinates[0], tweet.geo.coordinates[1], tweet);
+                    crearMarcador(tweet.geo.coordinates[0], tweet.geo.coordinates[1], tweet, respuesta);
                 } else {
                     var radioMetros = ((radioKm * 1000) * 30) / 100;
                     var randomLoc = getRandomLocation(latLngObj.lat(), latLngObj.lng(), radioMetros);
-                    crearMarcador(randomLoc.latitude, randomLoc.longitude, tweet);
+                    crearMarcador(randomLoc.latitude, randomLoc.longitude, tweet, respuesta);
                     //getTweetData(data.reply.statuses[tweet]);
                 }
             }
+            if (typeof data.reply.search_metadata !== 'undefined') {
+                respuesta.max_id = data.reply.search_metadata.max_id;
+                actualizarContador(respuesta);
+            }
+            var limit = data.rate.remaining;
+            calcularMaxCityCount(limit);
         }, function(err) {
             console.log("error al botener los tweets en locacion");
         });
@@ -125,14 +129,26 @@
             params
         ).then(function(data) {
             console.log("Obtenidos los trends");
-            for (var i = 0; i < 10; i++) {
-                var trendName = data.reply[0].trends[i].name;
-                var trendVolume = data.reply[0].trends[i].tweet_volume;
+            var trendsOrdenadosPorVolumen = sortByVolumenVieja(data.reply[0]);
+            for (var i = 0; i < 5; i++) {
+                // var trendName = data.reply[0].trends[i].name;
+                // var trendVolume = data.reply[0].trends[i].tweet_volume;
                 //console.log(trendName + " - " + trendVolume);
+                var trendName = trendsOrdenadosPorVolumen[i].name;
+                var trendVolume = trendsOrdenadosPorVolumen[i].tweet_volume;
                 crearMarcadorTrend(trendName, trendVolume, latLngObj, radio);
             }
         }, function(err) {
             console.log("error al obtener los trends");
+        });
+    }
+
+    function sortByVolumenVieja(trendsJson) {
+        var values = $.map(trendsJson, function(el) {
+            return el;
+        });
+        return values.sort(function(a, b) {
+            return b.tweet_volume - a.tweet_volume
         });
     }
 
