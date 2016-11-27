@@ -3,6 +3,9 @@ var long;
 var map;
 var maxCityCount = 15;
 
+var tweetMarkers = [];
+var trendMarkers = [];
+
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
@@ -59,36 +62,83 @@ function initialize() {
     marker.setMap(map);*/
 
     /***************Prueba Eventos**************/
-    map.addListener('zoom_changed', accionCambioZoom);
+    map.addListener('zoom_changed', actualizarDatos);
     //map.addListener('bounds_changed', accionCambioBound);
-    map.addListener('dragend', accionCambioBound);
+    map.addListener('dragend', actualizarDatos);
     //map.addListener('center_changed',accionCambioCentro);
     addYourLocationButton(map);
 }
 
-function accionCambioZoom() {
+
+function actualizarDatos() {
     var zoom = map.getZoom();
     console.log(zoom);
-    if (zoom > 14) {
-        console.log("*******Ocultar todo*******");
+    if (zoom < 8) {
+        console.log("trends");
+        mostrarTrends();
+        ocultarTweets();
+        buscarTrends();
+    } else {
+        mostrarTweets();
+        ocultarTrends();
+        buscarTweets();
     }
-    if (zoom <= 14 && zoom >= 9) {
-        console.log("*******Mostrar hashtags y ocultar trends*******");
-    }
-    if (zoom < 9 && zoom >= 2) {
-        console.log("*******Mostrar trends y ocultar hashtags*******");
-    }
-
 }
 
-function accionCambioBound() {
-
+function buscarTrends() {
+    console.log("buscando trends")
     var center = map.getCenter();
-    console.log(center);
-    console.log(map.getBounds());
-    //al mover el mapa busco tweets
-    //getTrendsHash(1);
-    getWOEIDByLat(center);
+    var north = map.getBounds().getNorthEast().lat();
+    var east = map.getBounds().getNorthEast().lng();
+    var south = map.getBounds().getSouthWest().lat();
+    var west = map.getBounds().getSouthWest().lng();
+    $.ajax({
+        url: "http://api.geonames.org/citiesJSON?north=" + north + "&south=" + south + "&east=" + east + "&west=" + west + "&maxRows=" + 5 + "&username=interfacesTP",
+        dataType: "jsonp",
+        success: function(data) {
+            console.log(data);
+            for (var city in data.geonames) {
+                var city = data.geonames[city];
+                var radio = ((city.population) * 0.025) / 100;
+                if (radio === 0) {
+                    radio = 5;
+                }
+                var cityCenter = new google.maps.LatLng({
+                    lat: city.lat,
+                    lng: city.lng
+                });
+                getWOEIDByLat(cityCenter, 30000);
+            }
+        }
+    });
+}
+
+function ocultarTweets() {
+    tweetMarkers.forEach(function(marker) {
+        marker.setVisible(false);
+    }, this);
+}
+
+function mostrarTweets() {
+    tweetMarkers.forEach(function(marker) {
+        marker.setVisible(true);
+    }, this);
+}
+
+function ocultarTrends() {
+    trendMarkers.forEach(function(marker) {
+        marker.setVisible(false);
+    }, this);
+}
+
+function mostrarTrends() {
+    trendMarkers.forEach(function(marker) {
+        marker.setVisible(true);
+    }, this);
+}
+
+function buscarTweets() {
+    var center = map.getCenter();
     searchCity(map);
 }
 
@@ -143,8 +193,27 @@ function tweetPopup(tweet, map, marker) {
     })(marker, tweet, infowindow));
 }
 
+function crearMarcadorTrend(trendName, trendVolume, latLngObj, radio) {
+    var randloc = getRandomLocation(latLngObj.lat(), latLngObj.lng(), radio * 10);
+    var marker = new MarkerWithLabel({
+        position: new google.maps.LatLng(randloc.latitude, randloc.longitude),
+        draggable: false,
+        raiseOnDrag: false,
+        map: map,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE, //el path es obligatorio, pero da igual lo que pongamos porque no se va a ver.
+            scale: 0 //tamaño del marker real, le pongo 0 y así no se ve.
+        },
+        labelContent: trendName + " - " + trendVolume,
+        labelAnchor: new google.maps.Point(22, 0),
+        labelClass: "plagioTrendsMap" //"labels" // the CSS class for the label
+    });
+    trendMarkers.push(marker);
+    marker.setMap(map);
+}
+
 function crearMarcador(lat, lng, tweet) {
-    console.log("Se crea un marcador");
+    //console.log("Se crea un marcador");
     // var cords = {lat: lat, lng: lng}
     var marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, lng),
@@ -153,9 +222,10 @@ function crearMarcador(lat, lng, tweet) {
             // title: hashtags[0]
     });
 
+    tweetMarkers.push(marker);
     tweetPopup(tweet, map, marker);
-
-    marker.setMap(map);
+    if (map.getZoom() >= 8)
+        marker.setMap(map);
 }
 
 function closeInfos() {

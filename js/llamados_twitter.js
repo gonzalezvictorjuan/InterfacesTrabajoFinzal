@@ -1,6 +1,7 @@
     var maxIdTweetCity = [];
 
     var infos = [];
+    var woeIDS = [];
     //aca empieza lo de twitter api
     var max_tweet_id = 0;
     var cb = new Codebird;
@@ -93,8 +94,8 @@
             params
         ).then(function(data) {
             console.log("Obtenidos los tweets en locacion");
-            if(typeof data.reply.search_metadata !== 'undefined'){
-              respuesta.max_id = data.reply.search_metadata.max_id;
+            if (typeof data.reply.search_metadata !== 'undefined') {
+                respuesta.max_id = data.reply.search_metadata.max_id;
             }
             var limit = data.rate.remaining;
             calcularMaxCityCount(limit);
@@ -115,7 +116,7 @@
 
     }
 
-    function getTrendsHash(woeid) {
+    function getTrendsHash(woeid, latLngObj, radio) {
         var params = {
             id: woeid
         };
@@ -124,17 +125,18 @@
             params
         ).then(function(data) {
             console.log("Obtenidos los trends");
-            for (var i = 0; i < 50; i++) {
+            for (var i = 0; i < 10; i++) {
                 var trendName = data.reply[0].trends[i].name;
                 var trendVolume = data.reply[0].trends[i].tweet_volume;
-                console.log(trendName + " - " + trendVolume);
+                //console.log(trendName + " - " + trendVolume);
+                crearMarcadorTrend(trendName, trendVolume, latLngObj, radio);
             }
         }, function(err) {
             console.log("error al obtener los trends");
         });
     }
 
-    function getWOEIDByLat(latLngObj) {
+    function getWOEIDByLat(latLngObj, radio) {
         var params = {
             lat: latLngObj.lat(),
             long: latLngObj.lng()
@@ -143,10 +145,19 @@
             "trends_closest",
             params
         ).then(function(data) {
-            console.log("Obtenidos el woeid en " + latLngObj.lat() + " - " + latLngObj.lng());
+            //console.log("Obtenidos el woeid en " + latLngObj.lat() + " - " + latLngObj.lng());
+            console.log(data.reply);
             for (var i = 0; i < Object.keys(data.reply).length - 1; i++) {
                 var woeid = data.reply[i].woeid;
-                getTrendsHash(woeid);
+
+                //console.log("WOEID"+woeid);
+                //console.log("woeid repetido: "+woeid+" => "+$.inArray(woeid, woeIDS));
+                if ($.inArray(woeid, woeIDS) == -1) {
+                    woeIDS.push(woeid);
+                    getTrendsHash(woeid, latLngObj, radio);
+                } else {
+                    console.log("repetido " + woeid);
+                }
             }
         }, function(err) {
             console.log("error al obtener los trends");
