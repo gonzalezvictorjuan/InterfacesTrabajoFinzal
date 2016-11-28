@@ -246,7 +246,7 @@ function crearMarcador(lat, lng, tweet, city) {
     marker.setMap(map);
     tweetMarkers.push(marker);
     tweetPopup(tweet, map, marker);
-    if ((map.getZoom() >= 8) && (map.getZoom() <= 10))
+    if ((map.getZoom() < 8)||((map.getZoom() >= 8) && (map.getZoom() <= 10)))
         marker.setVisible(false);
 }
 
