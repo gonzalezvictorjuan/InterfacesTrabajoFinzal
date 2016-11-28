@@ -6,6 +6,8 @@ var maxCityCount = 15;
 var tweetMarkers = [];
 var trendMarkers = [];
 
+var ciudadesTrends = [];
+
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
@@ -19,7 +21,6 @@ function showPosition(position) {
     long = position.coords.longitude;
     initialize();
 }
-
 
 function initialize() {
     var latlng = new google.maps.LatLng(lat, long);
@@ -69,7 +70,6 @@ function initialize() {
     addYourLocationButton(map);
 }
 
-
 function actualizarDatos() {
     var zoom = map.getZoom();
     console.log(zoom);
@@ -105,6 +105,7 @@ function buscarTrends() {
             console.log(data);
             for (var city in data.geonames) {
                 var city = data.geonames[city];
+                ciudadesTrends.push(city);
                 var radio = ((city.population) * 0.025) / 100;
                 if (radio === 0) {
                     radio = 5;
@@ -113,10 +114,26 @@ function buscarTrends() {
                     lat: city.lat,
                     lng: city.lng
                 });
-                getWOEIDByLat(cityCenter, 30000);
+                if (!esCiudadRepetida(cityCenter)) {
+                    getWOEIDByLat(cityCenter, 30000);
+                }
             }
         }
     });
+}
+
+function esCiudadRepetida(latlngCity) {
+    var resp = false;
+    for (var i = 0; i < ciudadesTrends.length; i++) {
+        var city = ciudadesTrends[i];
+        if ((latlngCity.lat() === city.lat) && (latlngCity.lng() === city.lng)) {
+            resp = true;
+            console.info("ciudad Repetida ");
+            console.info(city);
+            console.info(latlngCity);
+        }
+    }
+    return resp;
 }
 
 function ocultarTweets() {
@@ -246,8 +263,9 @@ function crearMarcador(lat, lng, tweet, city) {
     marker.setMap(map);
     tweetMarkers.push(marker);
     tweetPopup(tweet, map, marker);
-    if ((map.getZoom() < 8)||((map.getZoom() >= 8) && (map.getZoom() <= 10)))
+    if (((map.getZoom() >= 8) && (map.getZoom() <= 10)) || (map.getZoom() < 8)) {
         marker.setVisible(false);
+    }
 }
 
 function closeInfos() {
@@ -267,6 +285,7 @@ function crearMarkerTweetCount(city) {
     city.tweetCountMarker.setMap(map);
     city.tweetCountMarker.setVisible(false);
 }
+
 
 function actualizarContador(city) {
     if (map.getZoom() < 8 || map.getZoom() > 10) {
