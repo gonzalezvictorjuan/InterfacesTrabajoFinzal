@@ -66,6 +66,7 @@ function initialize() {
     map.addListener('zoom_changed', actualizarDatos);
     //map.addListener('bounds_changed', accionCambioBound);
     map.addListener('dragend', actualizarDatos);
+    map.addListener('click', closeInfos);
     //map.addListener('center_changed',accionCambioCentro);
     addYourLocationButton(map);
 }
