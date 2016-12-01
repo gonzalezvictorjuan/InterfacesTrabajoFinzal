@@ -52,3 +52,8 @@ $("#main-nav").find("a").on("click",function(){
   $("#ShadowLayer").removeClass("is-visible");
   $("#cd-main-content").removeClass();
  });
+
+
+$(".qs").on("click",function(){$('#MyModalQS').modal('show')});
+$(".cont").on("click",function(){$('#contactoModal').modal('show')});
+$(".cf").on("click",function(){$('#MyModalCF').modal('show')});
