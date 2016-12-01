@@ -16,5 +16,6 @@ function initAutocomplete() {
             map.setCenter(place.geometry.location);
             map.setZoom(8);
         }
+        actualizarDatos();
     });
 }
