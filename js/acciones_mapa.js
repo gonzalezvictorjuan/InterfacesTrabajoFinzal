@@ -201,7 +201,7 @@ function searchCity(map) {
             }
         },
         complete: function () {
-            ocultarSpinner();
+            // ocultarSpinner();
         }
     });
 }

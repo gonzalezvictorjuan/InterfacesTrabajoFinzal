@@ -74,6 +74,7 @@ function getTweetsByLocation(latLngObj, radioKm, count) {
                 //getTweetData(data.reply.statuses[tweet]);
             }
         }
+        ocultarSpinner();
         if (typeof data.reply.search_metadata !== 'undefined') {
             respuesta.max_id = data.reply.search_metadata.max_id;
             actualizarContador(respuesta);
