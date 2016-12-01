@@ -67,8 +67,9 @@ function actualizarDatos() {
         }
     }
 }
-
+var cantCiudades = 0;
 function buscarTrends() {
+    cont = 0;
     console.log("Buscando trends");
     mostrarSpinnerTrends();
     var center = map.getCenter();
@@ -76,7 +77,6 @@ function buscarTrends() {
     var east = map.getBounds().getNorthEast().lng();
     var south = map.getBounds().getSouthWest().lat();
     var west = map.getBounds().getSouthWest().lng();
-
     $.ajax({
         url: "http://api.geonames.org/citiesJSON?north=" + north + "&south=" + south + "&east=" + east + "&west=" + west + "&maxRows=" + 5 + "&username=interfacesTP",
         dataType: "jsonp",
@@ -89,6 +89,8 @@ function buscarTrends() {
                 for (var city in data.geonames) {
                     var city = data.geonames[city];
                     ciudadesTrends.push(city);
+                    
+                    cantCiudades = Object.keys(data.geonames).length;
                     var radio = ((city.population) * 0.025) / 100;
                     if (radio === 0) {
                         radio = 5;
