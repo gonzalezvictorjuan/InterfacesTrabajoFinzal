@@ -11,14 +11,15 @@ function cargarTrendsMundiales() {
         for (var i = 0; i < 5; i++) {
             var trendName = trendsOrdenadosPorVolumen[i].name;
             var trendVolume = trendsOrdenadosPorVolumen[i].tweet_volume;
-            
-            crearNavLateral(trendName, trendVolume);
+            var trendUrl = trendsOrdenadosPorVolumen[i].url;
+
+            crearNavLateral(trendName, trendVolume, trendUrl);
         }
     }, function(err) {
         console.log("error al obtener los trends mundiales");
     });
 }
 
-function crearNavLateral(name,volument){
-    $("#navTrends").append("<li><a href=\"#\">"+name+" - "+volument+"</a></li>");
+function crearNavLateral(name,volument, url){
+    $("#navTrends").append("<li><a href='"+url+"'>"+name+" - "+volument+"</a></li>");
 }
