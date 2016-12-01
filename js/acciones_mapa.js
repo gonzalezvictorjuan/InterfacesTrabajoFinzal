@@ -103,7 +103,7 @@ function buscarTrends() {
     var east = map.getBounds().getNorthEast().lng();
     var south = map.getBounds().getSouthWest().lat();
     var west = map.getBounds().getSouthWest().lng();
-    
+
     $.ajax({
         url: "http://api.geonames.org/citiesJSON?north=" + north + "&south=" + south + "&east=" + east + "&west=" + west + "&maxRows=" + 5 + "&username=interfacesTP",
         dataType: "jsonp",
@@ -124,7 +124,7 @@ function buscarTrends() {
                     getWOEIDByLat(cityCenter, 30000);
                 }
             }
-            
+
         }
     });
 }
@@ -255,7 +255,8 @@ function tweetPopup(tweet, map, marker) {
         return function () {
 
             closeInfos();
-            map.setCenter(marker.getPosition());
+            var latLng = new google.maps.LatLng({lat: ((marker.getPosition().lat())+0.02), lng: marker.getPosition().lng()});
+            map.setCenter(latLng);
 
             var urlTweet = "https%3A%2F%2Ftwitter.com%2FInterior%2Fstatus%2F" + tweet.id_str;
             $.ajax({
