@@ -67,9 +67,7 @@ function actualizarDatos() {
         }
     }
 }
-var cantCiudades = 0;
 function buscarTrends() {
-    cont = 0;
     console.log("Buscando trends");
     mostrarSpinnerTrends();
     var center = map.getCenter();
@@ -89,8 +87,6 @@ function buscarTrends() {
                 for (var city in data.geonames) {
                     var city = data.geonames[city];
                     ciudadesTrends.push(city);
-                    
-                    cantCiudades = Object.keys(data.geonames).length;
                     var radio = ((city.population) * 0.025) / 100;
                     if (radio === 0) {
                         radio = 5;

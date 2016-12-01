@@ -123,10 +123,8 @@ function sortByVolumenVieja(trendsJson) {
         return b.tweet_volume - a.tweet_volume
     });
 }
-var cont = 1;
+
 function getWOEIDByLat(latLngObj, radio) {
-    cont++;
-    
     var params = {
         lat: latLngObj.lat(),
         long: latLngObj.lng()
@@ -137,7 +135,6 @@ function getWOEIDByLat(latLngObj, radio) {
     ).then(function(data) {
         //console.log("Obtenidos el woeid en " + latLngObj.lat() + " - " + latLngObj.lng());
         console.log(data.reply);
-        var todosRepetidos = true;
         if (data.reply.hasOwnProperty('errors')) {
             console.log("Limite Execido de request a trends/closest");
             mostrarError("Error, intente de nuevo más tarde");
@@ -147,14 +144,9 @@ function getWOEIDByLat(latLngObj, radio) {
                 if ($.inArray(woeid, woeIDS) == -1) {
                     woeIDS.push(woeid);
                     getTrendsHash(woeid, latLngObj, radio);
-                    todosRepetidos = false;
                 } else {
                     console.log("Repetido " + woeid);
                 }
-            }
-            console.log("verif:"+cont+" "+cantCiudades+" "+todosRepetidos);
-            if((cont == cantCiudades) && todosRepetidos){
-                ocultarSpinnerTrends();
             }
         }
     }, function(err) {

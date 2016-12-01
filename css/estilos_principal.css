@@ -1,6 +1,10 @@
 /**************************** Estilos General*********************************/
 
-#MyModalCF, #MyModalQS, #contactoModal{  position: absolute; z-index: 10;}
+#MyModalCF, #MyModalQS, #contactoModal {
+  position: absolute;
+  z-index: 10;
+}
+
 .modal-backdrop {
   z-index: -1;
 }
@@ -52,14 +56,17 @@
   -moz-animation: bounceInDown 1s;
   animation: bounceInDown 1s;
 }
-.pulseYbounceAdentro{
-   -moz-animation: pulses 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceInDown 1s;
-   animation: pulses 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceInDown 1s;
+
+.pulseYbounceAdentro {
+  -moz-animation: pulses 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceInDown 1s;
+  animation: pulses 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceInDown 1s;
 }
-.pulseYbounceAfuera{
-   -moz-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceOutUp 1s;
-   animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceOutUp 1s;
+
+.pulseYbounceAfuera {
+  -moz-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceOutUp 1s;
+  animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceOutUp 1s;
 }
+
 .girarYbounceAdentro {
   -moz-animation: spin 1s infinite, bounceInDown 1s;
   animation: spin 1s infinite, bounceInDown 1s;
@@ -85,7 +92,11 @@
   animation: volar 1s steps(12) infinite, bounceOutUp 1s;
 }
 
-@keyframes pulses {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
+@keyframes pulses {
+  to {
+    box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);
+  }
+}
 
 @keyframes spin {
   from {
