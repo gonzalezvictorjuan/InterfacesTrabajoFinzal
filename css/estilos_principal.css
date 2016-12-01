@@ -1,8 +1,9 @@
 /**************************** Estilos General*********************************/
-.cargandoTweets{
+
+.cargandoTweets {
   position: absolute;
   top: 10%;
-  z-index:10;
+  z-index: 10;
   background: url("../img/twitter-sprite2.png");
   width: 90px;
   height: 90px;
@@ -11,59 +12,83 @@
 	animation: volar 1s steps(12) infinite, bounceOutUp 1s;*/
 }
 
-.cargandoTrends{
+.cargandoTrends {
   position: absolute;
   top: 10%;
-  z-index:10;
+  z-index: 10;
   background: url("../img/hashtag-spin.png");
   width: 90px;
   height: 90px;
   border-radius: 90px;
 }
 
-.loadingText{
+.cargandoError {
+  position: absolute;
+  top: 10%;
+  z-index: 10;
+  background: url("../img/error.png");
+  box-shadow: 0 0 0 0 rgba(232, 76, 61, 0.7);
+  width: 90px;
+  height: 90px;
+  border-radius: 90px;
+}
+
+.loadingText {
   color: #FFFFFF;
   font-weight: bold;
   position: absolute;
   top: 25%;
-  z-index:10;
+  z-index: 10;
   -moz-animation: bounceOutUp 1s;
-	animation: bounceOutUp 1s;
+  animation: bounceOutUp 1s;
 }
 
-.bounceAdentro{
-    -moz-animation: bounceInDown 1s;
-	animation: bounceInDown 1s;
+.bounceAdentro {
+  -moz-animation: bounceInDown 1s;
+  animation: bounceInDown 1s;
 }
-
-.girarYbounceAdentro{
+.pulseYbounceAdentro{
+   -moz-animation: pulses 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceInDown 1s;
+   animation: pulses 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceInDown 1s;
+}
+.pulseYbounceAfuera{
+   -moz-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceOutUp 1s;
+   animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceOutUp 1s;
+}
+.girarYbounceAdentro {
   -moz-animation: spin 1s infinite, bounceInDown 1s;
-	animation: spin 1s infinite, bounceInDown 1s;
+  animation: spin 1s infinite, bounceInDown 1s;
 }
-.girarYbounceAfuera{
+
+.girarYbounceAfuera {
   -moz-animation: spin 1s infinite, bounceOutUp 1s;
-	animation: spin 1s infinite, bounceOutUp 1s;
+  animation: spin 1s infinite, bounceOutUp 1s;
 }
-.volarYbounceAdentro{
+
+.volarYbounceAdentro {
   -moz-animation: volar 1s steps(12) infinite, bounceInDown 1s;
-	animation: volar 1s steps(12) infinite, bounceInDown 1s;
+  animation: volar 1s steps(12) infinite, bounceInDown 1s;
 }
-.bounceAfuera{
+
+.bounceAfuera {
   -moz-animation: bounceOutUp 1s;
-	animation: bounceOutUp 1s;
+  animation: bounceOutUp 1s;
 }
-.volarYbounceAfuera{
+
+.volarYbounceAfuera {
   -moz-animation: volar 1s steps(12) infinite, bounceOutUp 1s;
-	animation: volar 1s steps(12) infinite, bounceOutUp 1s;
+  animation: volar 1s steps(12) infinite, bounceOutUp 1s;
 }
+
+@keyframes pulses {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
 
 @keyframes spin {
-    from {
-        transform:rotate(0deg);
-    }
-    to {
-        transform:rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes bounceOutUp {
@@ -71,13 +96,11 @@
     -webkit-transform: translate3d(0, -10px, 0);
     transform: translate3d(0, -10px, 0);
   }
-
   40%, 45% {
     opacity: 1;
     -webkit-transform: translate3d(0, 20px, 0);
     transform: translate3d(0, 20px, 0);
   }
-
   to {
     opacity: 0;
     -webkit-transform: translate3d(0, -2000px, 0);
@@ -90,76 +113,73 @@
     -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
     animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
   }
-
   0% {
     opacity: 0;
     -webkit-transform: translate3d(0, -3000px, 0);
     transform: translate3d(0, -3000px, 0);
   }
-
   60% {
     opacity: 1;
     -webkit-transform: translate3d(0, 25px, 0);
     transform: translate3d(0, 25px, 0);
   }
-
   75% {
     -webkit-transform: translate3d(0, -10px, 0);
     transform: translate3d(0, -10px, 0);
   }
-
   90% {
     -webkit-transform: translate3d(0, 5px, 0);
     transform: translate3d(0, 5px, 0);
   }
-
   to {
     -webkit-transform: none;
     transform: none;
   }
 }
 
-@keyframes volar { /* sprite de gomez corriendo */
-	100% {
-		background-position-x: -1080px;
-	}
+@keyframes volar {
+  /* sprite de gomez corriendo */
+  100% {
+    background-position-x: -1080px;
+  }
 }
+
 .plagioTrendsMapChico {
-    opacity: 0.62;
-    font-weight: bold;
-    background-color: #222;
-    border: 1px solid #333;
-    border-radius: 1px;
-    color: #fff;
+  opacity: 0.62;
+  font-weight: bold;
+  background-color: #222;
+  border: 1px solid #333;
+  border-radius: 1px;
+  color: #fff;
 }
 
 .plagioTrendsMapGrande {
-    font-size: 20px;
-    opacity: 0.72;
-    font-weight: bold;
-    background-color: #222;
-    border: 1px solid #333;
-    border-radius: 1px;
-    color: #fff;
+  font-size: 20px;
+  opacity: 0.72;
+  font-weight: bold;
+  background-color: #222;
+  border: 1px solid #333;
+  border-radius: 1px;
+  color: #fff;
 }
 
 .plagioTrendsMapMediano {
-    opacity: 0.82;
-    font-size: 10px;
-    font-weight: bold;
-    background-color: #222;
-    border: 1px solid #333;
-    border-radius: 1px;
-    color: #fff;
+  opacity: 0.82;
+  font-size: 10px;
+  font-weight: bold;
+  background-color: #222;
+  border: 1px solid #333;
+  border-radius: 1px;
+  color: #fff;
 }
 
-.tweetMarkerCountPoco{
+.tweetMarkerCountPoco {
   width: 35px;
   height: 35px;
   background-image: url("images/twitterMarkerCount.png");
 }
 
-.tweetMarkerCountMedio{
+.tweetMarkerCountMedio {
   width: 45px;
   height: 45px;
   background-image: url("images/twitterMarkerCount.png");
@@ -168,7 +188,7 @@
   filter: brightness(120%) saturate(300%) hue-rotate(180deg);
 }
 
-.tweetMarkerCountMucho{
+.tweetMarkerCountMucho {
   width: 65px;
   height: 65px;
   background-image: url("images/twitterMarkerCount.png");
@@ -177,7 +197,7 @@
   filter: brightness(30%) saturate(600%) hue-rotate(180deg);
 }
 
-#zona_mapa{
+#zona_mapa {
   width: 100%;
   height: 100%;
   max-height: 90%;
