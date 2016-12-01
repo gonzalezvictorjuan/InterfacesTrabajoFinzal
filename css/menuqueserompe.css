@@ -35,8 +35,10 @@ label:focus {
   display: block;
   padding: 0;
   text-indent: -9999px;
-  background: #fff url(images/twitter-trends-inv.png) no-repeat;
+  background: #fff  url(images/twitter-trends-inv.png) no-repeat;
   background-size:100% 100%;
+  border-radius: 0px 45px 45px 0px;
+
 }
 .menu ul li > label {
   background: url(https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-arrow-right-b-128.png) 95% 50%/16px 16px no-repeat;
