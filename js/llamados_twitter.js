@@ -133,6 +133,8 @@ function getWOEIDByLat(latLngObj, radio) {
         "trends_closest",
         params
     ).then(function(data) {
+        //console.log("Obtenidos el woeid en " + latLngObj.lat() + " - " + latLngObj.lng());
+        console.log(data.reply);
         if (data.reply.hasOwnProperty('errors')) {
             console.log("Limite Execido de request a trends/closest");
             mostrarError("Error, intente de nuevo más tarde");

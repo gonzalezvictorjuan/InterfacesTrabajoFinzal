@@ -67,7 +67,6 @@ function actualizarDatos() {
         }
     }
 }
-
 function buscarTrends() {
     console.log("Buscando trends");
     mostrarSpinnerTrends();
@@ -76,7 +75,6 @@ function buscarTrends() {
     var east = map.getBounds().getNorthEast().lng();
     var south = map.getBounds().getSouthWest().lat();
     var west = map.getBounds().getSouthWest().lng();
-
     $.ajax({
         url: "http://api.geonames.org/citiesJSON?north=" + north + "&south=" + south + "&east=" + east + "&west=" + west + "&maxRows=" + 5 + "&username=interfacesTP",
         dataType: "jsonp",
@@ -205,6 +203,7 @@ function mostrarSpinnerTrends() {
     $("#spinner-trends").show();
     $("#trendsLoading").removeClass("girarYbounceAfuera").addClass("girarYbounceAdentro");
     $("#trendLoadingText").removeClass("bounceAfuera").addClass("bounceAdentro");
+    var loop_handle = setTimeout("ocultarSpinnerTrends();",'5000');
 }
 
 
