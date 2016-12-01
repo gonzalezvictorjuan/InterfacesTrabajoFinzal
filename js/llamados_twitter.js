@@ -12,7 +12,7 @@ login();
 function login() {
     cb.__call(
         "oauth2_token", {},
-        function(reply, err) {
+        function (reply, err) {
             var bearer_token;
             if (err) {
                 console.log("Error: " + err.error);
@@ -21,7 +21,7 @@ function login() {
                 bearer_token = reply.access_token;
             }
         }
-    ).then(function(data) {
+    ).then(function (data) {
         //doStuff();
     });
 }
@@ -61,7 +61,7 @@ function getTweetsByLocation(latLngObj, radioKm, count) {
     cb.__call(
         "search_tweets",
         params
-    ).then(function(data) {
+    ).then(function (data) {
         console.log("Obtenidos los tweets en locacion");
         for (var tweet in data.reply.statuses) { //ciclo los tweets, statuses es un arreglo json de exactamente count tweets
             var tweet = data.reply.statuses[tweet];
@@ -74,14 +74,14 @@ function getTweetsByLocation(latLngObj, radioKm, count) {
                 //getTweetData(data.reply.statuses[tweet]);
             }
         }
-        ocultarSpinner();
+        ocultarSpinnerTweet();
         if (typeof data.reply.search_metadata !== 'undefined') {
             respuesta.max_id = data.reply.search_metadata.max_id;
             actualizarContador(respuesta);
         }
         var limit = data.rate.remaining;
         calcularMaxCityCount(limit);
-    }, function(err) {
+    }, function (err) {
         console.log("error al botener los tweets en locacion");
     });
 
@@ -94,7 +94,7 @@ function getTrendsHash(woeid, latLngObj, radio) {
     cb.__call(
         "trends_place",
         params
-    ).then(function(data) {
+    ).then(function (data) {
         console.log("Obtenidos los trends");
         var trendsOrdenadosPorVolumen = sortByVolumenVieja(data.reply[0]);
         for (var i = 0; i < 5; i++) {
@@ -105,16 +105,17 @@ function getTrendsHash(woeid, latLngObj, radio) {
             var trendVolume = trendsOrdenadosPorVolumen[i].tweet_volume;
             crearMarcadorTrend(trendName, trendVolume, latLngObj, radio);
         }
-    }, function(err) {
+        ocultarSpinnerTrends();
+    }, function (err) {
         console.log("error al obtener los trends");
     });
 }
 
 function sortByVolumenVieja(trendsJson) {
-    var values = $.map(trendsJson, function(el) {
+    var values = $.map(trendsJson, function (el) {
         return el;
     });
-    return values.sort(function(a, b) {
+    return values.sort(function (a, b) {
         return b.tweet_volume - a.tweet_volume
     });
 }
@@ -127,12 +128,11 @@ function getWOEIDByLat(latLngObj, radio) {
     cb.__call(
         "trends_closest",
         params
-    ).then(function(data) {
+    ).then(function (data) {
         //console.log("Obtenidos el woeid en " + latLngObj.lat() + " - " + latLngObj.lng());
         console.log(data.reply);
         for (var i = 0; i < Object.keys(data.reply).length - 1; i++) {
             var woeid = data.reply[i].woeid;
-
             //console.log("WOEID"+woeid);
             //console.log("woeid repetido: "+woeid+" => "+$.inArray(woeid, woeIDS));
             if ($.inArray(woeid, woeIDS) == -1) {
@@ -142,7 +142,7 @@ function getWOEIDByLat(latLngObj, radio) {
                 console.log("repetido " + woeid);
             }
         }
-    }, function(err) {
+    }, function (err) {
         console.log("error al obtener los trends");
     });
 }
