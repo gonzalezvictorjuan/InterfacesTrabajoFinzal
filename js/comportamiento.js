@@ -22,3 +22,7 @@ function cargarTrendsMundiales() {
 function crearNavLateral(name,volument){
     $("#navTrends").append("<li><a href=\"#\">"+name+" - "+volument+"</a></li>");
 }
+
+function mostrarError(mensaje){
+    alert(mensaje);
+}
