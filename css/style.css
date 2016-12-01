@@ -92,14 +92,13 @@ Main components
   background-size: cover;
 }
 
-
 #cd-intro h1{
-  position: fixed;
-  width: 15%;
-  left: 12%;
-  top: 5%;
+  position: absolute;
+  width: 30%;
+  left: 16%;
+  top: 50%;
   bottom: auto;
-
+  right: auto;
 
   -webkit-transform: translateX(-50%) translateY(-50%);
   -moz-transform: translateX(-50%) translateY(-50%);
@@ -113,12 +112,7 @@ Main components
   color: white;
 }
 
-@media only screen and (min-width: 768px) {
-  #cd-intro h1{
-    font-size: 26px;
-    font-size: 1.625rem;
-  }
-}
+
 .no-js #cd-intro {
   height: 640px;
 }
@@ -128,18 +122,17 @@ Main components
   top:0px;
   left: 0;
   width: 100%;
-  height: 10%;
   z-index: 2;
   background-color: #000000;
   -webkit-transition: background 0.2s;
   -moz-transition: background 0.2s;
   transition: background 0.2s;
 }
-@media only screen and (min-width: 768px) {
+/*@media only screen and (min-width: 768px) {
   .cd-header {
     height: 80px;
   }
-}
+}*/
 
 /* we use jQuery to apply a mask to this element - CSS clip property */
 /*.cd-blurred-bg {
@@ -161,9 +154,11 @@ Main components
 }
 
 #cd-logo {
-  position: relative;
-  left: 5%;
-  top: 5px;
+  position: absolute;
+  left: 3%;
+  top: 40%;
+  bottom: auto;
+  right: auto;
   max-width: 40px;
   max-height: 40px;
   /*border:1px solid transparent;*/
@@ -196,7 +191,6 @@ Main components
   100% {
      background-position:-70px 0px;
   }
-
 }
 
 @-ms-keyframes rotate{
@@ -217,29 +211,30 @@ Main components
 }
 
 @media only screen and (min-width: 768px) {
-  #cd-logo {
-    left: 20px;
-    top: 20px;
+  .cd-menu-trigger {
+    font-size: 16px;
+    font-size: 1rem;
   }
-}
-@media only screen and (min-width: 1170px) {
-  #cd-logo {
-    left: 60px;
+  #cd-intro h1{
+    font-size: 26px;
+    font-size: 1.625rem;
   }
+
 }
 
 .cd-menu-trigger{
-  display: inline-block;
+  /*display: inline-block;*/
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 15px;
+  top: 20%;
   height: 50px;
+  left: auto;
   line-height: 50px;
   padding: 0 .8em;
   text-transform: uppercase;
   font-weight: bold;
-  font-size: 14px;
-  font-size: 0.875rem;
+  font-size: 26px;
+  font-size: 1.625rem;
 }
 .cd-menu-trigger span {
   /* hamburger icon */
@@ -280,19 +275,7 @@ Main components
 .no-touch .cd-menu-trigger:hover span::after {
   bottom: -8px;
 }
-@media only screen and (min-width: 768px) {
-  .cd-menu-trigger {
-    top: 16px;
-    right: 10px;
-    font-size: 16px;
-    font-size: 1rem;
-  }
-}
-@media only screen and (min-width: 1170px) {
-  .cd-menu-trigger {
-    right: 60px;
-  }
-}
+
 
 #main-nav {
   position: fixed;
