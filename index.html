@@ -4,22 +4,21 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
 	<link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/reset.css">
-	<!-- CSS reset -->
 	<link rel="stylesheet" href="css/estilos_principal.css"></link>
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/input.css">
-	<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">-->
-	<link rel="stylesheet" href="css/menuqueserompe.css">
+	<link rel="stylesheet" href="css/menulateral.css">
 	<link rel="stylesheet" href="css/animate.css">
+
+
+	
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"></link>
+	<link rel="icon" href="favicon.ico" type="image/x-icon"></link>
 	<script src="js/modernizr.js"></script>
-	<!-- Modernizr -->
-
 	<title>TweetMap</title>
-
 </head>
 
 <body>
@@ -40,7 +39,7 @@
 	</div>
 	<main id="cd-main-content">
 		<section id="cd-intro">
-			<!-- Menu que se no rompe -->
+
 			<div id="wrapper">
 				<input type="checkbox" id="menu" name="menu" class="menu-checkbox">
 				<div class="menu">
@@ -51,7 +50,6 @@
 					</ul>
 				</div>
 			</div>
-			<!-- Cierra menu que no se rompe -->
 
 			<header class="cd-header">
 				<div id="cd-logo">
@@ -62,39 +60,174 @@
 				<a class="cd-menu-trigger" href="#main-nav">Info!<span></span></a>
 			</header>
 
-			<!-- <div class="cd-blurred-bg"></div> -->
-
 			<div id="zona_mapa"></div>
 
-
 		</section>
-		<!-- cd-intro -->
-
-
-
-
-
 	</main>
-
-	<div class="cd-shadow-layer"></div>
-
-
-
+	<div id="ShadowLayer" class="cd-shadow-layer"></div>
 
 	<nav id="main-nav">
 		<ul>
-			<li><a href="#0"><span>Catedra: Interfaces de Usuario e Interaccion</span></a></li>
-			<li><a href="#0"><span>Carrera: TUDAI</span></a></li>
-			<li><a><span>González, Victor Juan</span></a></li>
-			<li><a><span>Nosei, Santiago Nicolas</span></a></li>
-			<li><a><span>Rodríguez, Joaquín</span></a></li>
+<!-- 5 en total -->
+			<li><a class="qs"><span>Quienes Somos</span></a></li>
+			<li><a class="cont"><span>Contacto</span></a></li>
+			<li><a class="cf"><span>Como Funciona</span></a></li>
+			<li><a href="http://tudai2-2.alumnos.exa.unicen.edu.ar/interfaces" target="_blank" ><span>Catedra: Interfaces de Usuario e Interaccion</span></a></li>
 		</ul>
 		<a href="#0" class="cd-close-menu">Close<span></span></a>
 	</nav>
 
+<!-- ModalQuienesSomos -->
+<div class="modal fade" id="MyModalQS" role="dialog">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Quienes Somos:</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+								<p>text</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ModalComoFunciona -->
+<div class="modal fade" id="MyModalCF" role="dialog">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Como Funciona:</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+							<ul>
+								<li>
+									<h2>APIs:</h2>
+										<ul>
+											<li><h3>Twitter API:</h3></li>
+											<li><p>Usada para consultar información sobre tweets y trending topics</p></li>
+											<li><h3>Twitter Oembedded API:</h3></li>
+											<li><p>Usada para embeber un tweet en el mapa y que se muestre como en la pagina de Twitter</p></li>
+											<li><h3>Geonames API:</h3></li>
+											<li><p>Usada para devolver las ubicaciones de las ciudades dentro del mapa, con la que hacemos pedidos a la Api de Twitter</p></li>
+											<li><h3>Google Maps API JS V3:</h3></li>
+											<li><p>Usada para crear un mapa dentro de la pagina y realizar todas las funciones para mostrar tweets y trending topics</p></li>
+										</ul>
+								</li>
+								<li>
+									<h2>Librerias:</h2>
+										<ul>
+											<li><h3>autocomplete.js:</h3></li>
+											<li><p>Usada para habilitar la opcion de autcompletar de google para buscar lugares</p></li>
+											<li><h3>bootstrap.min.js:</h3></li>
+											<li><p>Usada para darle estilo responsive a la pagina</p></li>
+											<li><h3>codebird.js:</h3></li>
+											<li><p>Usada para realizar la conexion a la API de Twitter</p></li>
+											<li><h3>markerwithlabel.js:</h3></li>
+											<li><p>Usada para colocar marcadores personalizados dentro del mapa de google maps</p></li>
+											<li><h3>widgets.js:</h3></li>
+											<li><p>Usada para recrear el diseño de un tweet de la pagina de Twitter	</p></li>
+										</ul>
+								</li>
+							</ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--modal contacto-->
+<div class="modal fade" id="contactoModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Contactenos</h4>
+			</div>
+			<div class="modal-body">
+				<div class="container">
+					<div class="col-md-5">
+						<div class="form-area">
+							<form role="form">
+								<br style="clear:both">
+								<h3 style="margin-bottom: 25px; text-align: center;">Contact Form</h3>
+								<div class="form-group">
+									<input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>
+								</div>
+								<div class="form-group">
+									<textarea class="form-control" type="textarea" id="message" placeholder="Message" maxlength="140" rows="7"></textarea>
+									<span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
+								</div>
+
+								<button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
-	<!-- Resource jQuery -->
 	<script type="text/javascript" src="js/widgets.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/codebird.js"></script>
@@ -105,7 +238,5 @@
 	<script type="text/javascript" src="js/llamados_twitter.js"></script>
 	<script type="text/javascript" src="js/autocomplete.js"></script>
 	<script type="text/javascript" src="js/comportamiento.js"></script>
-
 </body>
-
 </html>

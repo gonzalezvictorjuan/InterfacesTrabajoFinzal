@@ -176,7 +176,6 @@ function searchCity(map) {
             } else {
                 for (var city in data.geonames) {
                     var city = data.geonames[city];
-                    //var radio = (Math.sqrt(city.population) / 10); UNA FORMA
                     var radio = ((city.population) * 0.025) / 100;
                     if (radio === 0) {
                         radio = 5;
@@ -189,9 +188,7 @@ function searchCity(map) {
                 }
             }
         },
-        complete: function() {
-            // ocultarSpinner();
-        }
+        complete: function() {}
     });
 }
 
@@ -201,7 +198,6 @@ function ocultarSpinnerTrends() {
     $("#trendLoadingText").removeClass("bounceAdentro").addClass("bounceAfuera");
     $("#trendLoadingText").one("webkitTransitionEnd animationend oTransitionEnd msTransitionEnd transitionend",
         function(event) {
-            // $(this).hide();
             $("#spinner-trends").hide();
         }
     );
@@ -209,7 +205,6 @@ function ocultarSpinnerTrends() {
 
 function mostrarSpinnerTrends() {
     $("#spinner-trends").show();
-    //$("#trendLoadingText").show();
     $("#trendsLoading").removeClass("girarYbounceAfuera").addClass("girarYbounceAdentro");
     $("#trendLoadingText").removeClass("bounceAfuera").addClass("bounceAdentro");
 }
@@ -221,7 +216,6 @@ function ocultarSpinnerTweet() {
     $("#tweetLoadingText").removeClass("bounceAdentro").addClass("bounceAfuera");
     $("#tweetLoadingText").one("webkitTransitionEnd animationend oTransitionEnd msTransitionEnd transitionend",
         function(event) {
-            //$(this).hide();
             $("#spinner-tweets").hide();
         }
     );
@@ -229,7 +223,6 @@ function ocultarSpinnerTweet() {
 
 function mostrarSpinnerTweet() {
     $("#spinner-tweets").show();
-    //$("#tweetLoadingText").show();
     $("#spriteLoading").removeClass("volarYbounceAfuera").addClass("volarYbounceAdentro");
     $("#tweetLoadingText").removeClass("bounceAfuera").addClass("bounceAdentro");
 }
@@ -240,7 +233,10 @@ function tweetPopup(tweet, map, marker) {
         return function() {
 
             closeInfos();
-            var latLng = new google.maps.LatLng({ lat: ((marker.getPosition().lat()) + 0.01), lng: marker.getPosition().lng() });
+            var latLng = new google.maps.LatLng({
+                lat: ((marker.getPosition().lat()) + 0.01),
+                lng: marker.getPosition().lng()
+            });
             map.setCenter(latLng);
 
             var urlTweet = "https%3A%2F%2Ftwitter.com%2FInterior%2Fstatus%2F" + tweet.id_str;
@@ -276,9 +272,9 @@ function crearMarcadorTrend(trendName, trendVolume, latLngObj, radio) {
             path: google.maps.SymbolPath.CIRCLE, //el path es obligatorio, pero da igual lo que pongamos porque no se va a ver.
             scale: 0 //tamaño del marker real, le pongo 0 y así no se ve.
         },
-        labelContent: trendName, // + " - " + trendVolume + cssClass,
+        labelContent: trendName,
         labelAnchor: new google.maps.Point(22, 0),
-        labelClass: cssClass //"labels" // the CSS class for the label
+        labelClass: cssClass
     });
     trendMarkers.push(marker);
     marker.setMap(map);
@@ -287,7 +283,7 @@ function crearMarcadorTrend(trendName, trendVolume, latLngObj, radio) {
 function crearMarcador(lat, lng, tweet, city) {
     var marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, lng),
-        icon: 'twitter-logo.png'
+        icon: 'img/twitter-logo.png'
     });
     city.tweetMarker.push(marker);
     console.log(city);
