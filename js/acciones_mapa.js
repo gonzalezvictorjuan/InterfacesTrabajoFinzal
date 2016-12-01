@@ -216,15 +216,15 @@ function ocultarSpinnerTrends() {
     $("#trendLoadingText").removeClass("bounceAdentro").addClass("bounceAfuera");
     $("#trendLoadingText").one("webkitTransitionEnd animationend oTransitionEnd msTransitionEnd transitionend",
         function (event) {
-            $(this).hide();
-            $("#trendsLoading").hide();
+           // $(this).hide();
+            $("#spinner-trends").hide();
         }
     );
 }
 
 function mostrarSpinnerTrends() {
-    $("#trendsLoading").show();
-    $("#trendLoadingText").show();
+    $("#spinner-trends").show();
+    //$("#trendLoadingText").show();
     $("#trendsLoading").removeClass("girarYbounceAfuera").addClass("girarYbounceAdentro");
     $("#trendLoadingText").removeClass("bounceAfuera").addClass("bounceAdentro");
 }
@@ -236,15 +236,15 @@ function ocultarSpinnerTweet() {
     $("#tweetLoadingText").removeClass("bounceAdentro").addClass("bounceAfuera");
     $("#tweetLoadingText").one("webkitTransitionEnd animationend oTransitionEnd msTransitionEnd transitionend",
         function (event) {
-            $(this).hide();
-            $("#spriteLoading").hide();
+            //$(this).hide();
+            $("#spinner-tweets").hide();
         }
     );
 }
 
 function mostrarSpinnerTweet() {
-    $("#spriteLoading").show();
-    $("#tweetLoadingText").show();
+    $("#spinner-tweets").show();
+    //$("#tweetLoadingText").show();
     $("#spriteLoading").removeClass("volarYbounceAfuera").addClass("volarYbounceAdentro");
     $("#tweetLoadingText").removeClass("bounceAfuera").addClass("bounceAdentro");
 }
