@@ -203,6 +203,7 @@ function mostrarSpinnerTrends() {
     $("#spinner-trends").show();
     $("#trendsLoading").removeClass("girarYbounceAfuera").addClass("girarYbounceAdentro");
     $("#trendLoadingText").removeClass("bounceAfuera").addClass("bounceAdentro");
+    var loop_handle = setTimeout("ocultarSpinnerTrends();",'5000');
 }
 
 
