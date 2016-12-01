@@ -27,6 +27,7 @@ label:focus {
 }
 .menu label.menu-toggle {
   position: absolute;
+  top:40%;
   right: -60px;
   width: 60px;
   height: 60px;
@@ -34,7 +35,8 @@ label:focus {
   display: block;
   padding: 0;
   text-indent: -9999px;
-  background: #fff url(https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png) 50% 50%/25px 25px no-repeat;
+  background: #fff url(images/twitter-trends-inv.png) no-repeat;
+  background-size:100% 100%;
 }
 .menu ul li > label {
   background: url(https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-arrow-right-b-128.png) 95% 50%/16px 16px no-repeat;

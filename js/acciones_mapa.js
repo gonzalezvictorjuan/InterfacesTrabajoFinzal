@@ -338,7 +338,7 @@ function crearMarkerTweetCount(city) {
         },
         //labelContent: trendName, // + " - " + trendVolume + cssClass,
         labelInBackground: true,
-        labelAnchor: new google.maps.Point(15, 15),
+        labelAnchor: new google.maps.Point(17.5, 17.5),
         labelClass: cssClass
     });
     google.maps.event.addListener(marker, 'click', function (ev) {
@@ -355,10 +355,6 @@ function visualizarTweets(marker) {
 }
 
 function actualizarContador(city) {
-    var cssClass = "plagioTrendsMapChico";
-    cssClass = "plagioTrendsMapMediano"
-    cssClass = "plagioTrendsMapGrande"
-
     if (map.getZoom() < 8 || map.getZoom() > 10) {
         city.tweetCountMarker.setVisible(false);
     } else {
@@ -368,11 +364,11 @@ function actualizarContador(city) {
             city.tweetCountMarker.setVisible(true);
             if (count > 15) {
                 city.tweetCountMarker.set('labelClass', "tweetMarkerCountMedio");
-                city.tweetCountMarker.set('labelAnchor', new google.maps.Point(20, 20));
+                city.tweetCountMarker.set('labelAnchor', new google.maps.Point(22.5, 22.5));
             }
             if (count > 25) {
                 city.tweetCountMarker.set('labelClass', "tweetMarkerCountMucho");
-                city.tweetCountMarker.set('labelAnchor', new google.maps.Point(30, 30));
+                city.tweetCountMarker.set('labelAnchor', new google.maps.Point(32.5, 32.5));
             }
         } else {
             city.tweetCountMarker.setVisible(false);
