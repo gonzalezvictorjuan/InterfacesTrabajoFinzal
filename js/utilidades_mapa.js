@@ -304,3 +304,7 @@ function getRandomLocation(latitude, longitude, radiusInMeters) {
         longitude: longitude + (offsetLongitude * (180 / Math.PI))
     }
 };
+
+$(".loadingText").css("left", ($(window).width() / 2)-65);
+$(".cargandoTweets").css("left", ($(window).width() / 2)-45);
+$(".cargandoTrends").css("left", ($(window).width() / 2)-45);
