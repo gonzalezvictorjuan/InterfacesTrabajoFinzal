@@ -3,7 +3,7 @@
 #MyModalCF, #MyModalQS, #contactoModal{  position: absolute; z-index: 10;}
 .cargandoTweets {
   position: absolute;
-  top: 25%;
+  top: 16%;
   z-index: 10;
   background: url("../img/twitter-sprite2.png");
   width: 90px;
@@ -15,7 +15,7 @@
 
 .cargandoTrends {
   position: absolute;
-  top: 25%;
+  top: 16%;
   z-index: 10;
   background: url("../img/hashtag-spin.png");
   width: 90px;
@@ -25,7 +25,7 @@
 
 .cargandoError {
   position: absolute;
-  top: 25%;
+  top: 16%;
   z-index: 10;
   background: url("../img/error.png");
   box-shadow: 0 0 0 0 rgba(232, 76, 61, 0.7);
@@ -38,7 +38,7 @@
   color: #FFFFFF;
   font-weight: bold;
   position: absolute;
-  top: 45%;
+  top: 32%;
   z-index: 10;
   -moz-animation: bounceOutUp 1s;
   animation: bounceOutUp 1s;
