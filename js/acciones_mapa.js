@@ -69,6 +69,7 @@ function initialize() {
     map.addListener('click', closeInfos);
     //map.addListener('center_changed',accionCambioCentro);
     addYourLocationButton(map);
+    initAutocomplete();
 }
 
 function actualizarDatos() {
@@ -278,17 +279,31 @@ function closeInfos() {
 }
 
 function crearMarkerTweetCount(city) {
-    var marker = new google.maps.Marker({
+  var cssClass = "tweetMarkerCountPoco";
+    var marker = new MarkerWithLabel({
         position: new google.maps.LatLng(city.latLng.lat, city.latLng.lng),
-        icon: 'twitter-logo.png'
+        draggable: false,
+        raiseOnDrag: false,
+        map: map,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE, //el path es obligatorio, pero da igual lo que pongamos porque no se va a ver.
+            scale: 0 //tamaño del marker real, le pongo 0 y así no se ve.
+        },
+        //labelContent: trendName, // + " - " + trendVolume + cssClass,
+        labelInBackground: true,
+        labelAnchor: new google.maps.Point(15, 15),
+        labelClass: cssClass
     });
     city.tweetCountMarker = marker;
     city.tweetCountMarker.setMap(map);
     city.tweetCountMarker.setVisible(false);
 }
 
-
 function actualizarContador(city) {
+  var cssClass = "plagioTrendsMapChico";
+      cssClass = "plagioTrendsMapMediano"
+      cssClass = "plagioTrendsMapGrande"
+
     if (map.getZoom() < 8 || map.getZoom() > 10) {
         city.tweetCountMarker.setVisible(false);
     } else {
@@ -296,6 +311,14 @@ function actualizarContador(city) {
         if (count > 0) {
             city.tweetCountMarker.setLabel(count.toString());
             city.tweetCountMarker.setVisible(true);
+            if(count > 15){
+              city.tweetCountMarker.set('labelClass',"tweetMarkerCountMedio");
+              city.tweetCountMarker.set('labelAnchor', new google.maps.Point(20, 20));
+            }
+            if(count > 25){
+              city.tweetCountMarker.set('labelClass',"tweetMarkerCountMucho");
+              city.tweetCountMarker.set('labelAnchor', new google.maps.Point(30, 30));
+            }
         } else {
             city.tweetCountMarker.setVisible(false);
         }

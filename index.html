@@ -1,106 +1,88 @@
 <!doctype html>
 <html lang="en" class="no-js">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
 	<link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="css/reset.css">
+	<!-- CSS reset -->
 	<link rel="stylesheet" href="css/estilos_principal.css"></link>
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/input.css">
-
-	<script src="js/modernizr.js"></script> <!-- Modernizr -->
+	<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">-->
+	<link rel="stylesheet" href="css/menuqueserompe.css">
+	<script src="js/modernizr.js"></script>
+	<!-- Modernizr -->
 
 	<title>Nombre sin Definir</title>
 
 </head>
+
 <body>
 
-<main id="cd-main-content">
-	<section id="cd-intro">
-		<div id="zona_mapa"></div>
-		<h1>Nombre sin Definir</h1>
-
-
-<!-- Menu que se rompe -->
-		<div id="wrapper">
-		  <input type="checkbox" id="menu2" name="menu2" class="menu2-checkbox">
-		  <div class="menu2">
-		    <label class="menu2-toggle" for="menu2"><span>Toggle</span></label>
-		    <ul>
-		      <li>
-		        <a href="#">Menu-1</a>
-		      </li>
-		      <li>
-		        <a href="#">Menu-2</a>
-		      </li>
-		      <li>
-		        <a href="#">Menu-6</a>
-		      </li>
-		    </ul>
-		  </div>
-		</div><!-- #wrapper -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		<header class="cd-header">
-			<div id="cd-logo">
-				<div id="globe"></div>
+	<main id="cd-main-content">
+		<section id="cd-intro">
+			<!-- Menu que se no rompe -->
+			<div id="wrapper">
+				<input type="checkbox" id="menu" name="menu" class="menu-checkbox">
+				<div class="menu">
+					<label class="menu-toggle" for="menu"><span>Toggle</span></label>
+					<ul>
+						<li>
+							<a href="#">Menu-1</a>
+						</li>
+					</ul>
+				</div>
 			</div>
-			<input class="input" placeholder="Buscar" type="text" ></input>
-			<a class="cd-menu-trigger" href="#main-nav">Info!<span></span></a>
-		</header>
-		<div class="cd-blurred-bg"></div>
-	</section> <!-- cd-intro -->
-</main>
+			<!-- Cierra menu que no se rompe -->
 
-<div class="cd-shadow-layer"></div>
+			<div id="zona_mapa"></div>
+			<h1>Nombre sin Definir</h1>
+
+			<header class="cd-header">
+				<div id="cd-logo">
+					<div id="globe"></div>
+				</div>
+				<input id="input-buscar" class="input" placeholder="Buscar" type="text"></input>
+				<a class="cd-menu-trigger" href="#main-nav">Info!<span></span></a>
+			</header>
+			<div class="cd-blurred-bg"></div>
+		</section>
+		<!-- cd-intro -->
+	</main>
+
+	<div class="cd-shadow-layer"></div>
 
 
-<div id="divBonito">
-
-<ul>
-	<li></li>
-</ul>
 
 
-</div>
+	<nav id="main-nav">
+		<ul>
+			<li><a href="#0"><span>Catedra: Interfaces de Usuario e Interaccion</span></a></li>
+			<li><a href="#0"><span>Carrera: TUDAI</span></a></li>
+			<li><a><span>González, Victor Juan</span></a></li>
+			<li><a><span>Nosei, Santiago Nicolas</span></a></li>
+			<li><a><span>Rodríguez, Joaquín</span></a></li>
+		</ul>
+		<a href="#0" class="cd-close-menu">Close<span></span></a>
+	</nav>
 
-<nav id="main-nav">
-	<ul>
-		<li><a href="#0"><span>Catedra: Interfaces de Usuario e Interaccion</span></a></li>
-		<li><a href="#0"><span>Carrera: TUDAI</span></a></li>
-		<li><a><span>González, Victor Juan</span></a></li>
-		<li><a><span>Nosei, Santiago Nicolas</span></a></li>
-		<li><a><span>Rodríguez, Joaquín</span></a></li>
-	</ul>
-	<a href="#0" class="cd-close-menu">Close<span></span></a>
-</nav>
-
-<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="js/main.js"></script> <!-- Resource jQuery -->
-<script type="text/javascript" src="js/widgets.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/codebird.js"></script>
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
-<script type="text/javascript" src="js/markerwithlabel.js"></script>
-<script type="text/javascript" src="js/utilidades_mapa.js"></script>
-<script type="text/javascript" src="js/acciones_mapa.js"></script>
-<script type="text/javascript" src="js/llamados_twitter.js"></script>
-
+	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<!-- Resource jQuery -->
+	<script type="text/javascript" src="js/widgets.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/codebird.js"></script>
+	<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true&libraries=places"></script>
+	<script type="text/javascript" src="js/markerwithlabel.js"></script>
+	<script type="text/javascript" src="js/utilidades_mapa.js"></script>
+	<script type="text/javascript" src="js/acciones_mapa.js"></script>
+	<script type="text/javascript" src="js/llamados_twitter.js"></script>
+	<script type="text/javascript" src="js/autocomplete.js"></script>
 
 </body>
+
 </html>
