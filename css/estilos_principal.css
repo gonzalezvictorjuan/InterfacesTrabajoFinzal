@@ -200,9 +200,5 @@
 #zona_mapa {
   width: 100%;
   height: 100%;
-<<<<<<< HEAD
-  max-height: 90%;
-=======
-  max-height: 100%; 
->>>>>>> 907bce16a990dbcab36f5bbfb39c3c13ad56a191
+  max-height: 100%;
 }
