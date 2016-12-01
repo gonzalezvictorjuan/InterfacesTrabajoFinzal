@@ -1,5 +1,8 @@
 /**************************** Estilos General*********************************/
 
+.Titulo{font-size: 20px; font-weight:bold;}
+.Titulo2{font-size: 16px; font-weight:bold;}
+.Tab{padding-left: 5px;}
 
 #MyModalCF, #MyModalQS, #contactoModal {
   position: absolute;
