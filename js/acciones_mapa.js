@@ -104,7 +104,7 @@ function buscarTrends() {
     $.ajax({
         url: "http://api.geonames.org/citiesJSON?north=" + north + "&south=" + south + "&east=" + east + "&west=" + west + "&maxRows=" + 5 + "&username=interfacesTP",
         dataType: "jsonp",
-        success: function(data) {
+        success: function (data) {
             console.log(data);
             for (var city in data.geonames) {
                 var city = data.geonames[city];
@@ -140,13 +140,13 @@ function esCiudadRepetida(latlngCity) {
 }
 
 function ocultarTweets() {
-    tweetMarkers.forEach(function(marker) {
+    tweetMarkers.forEach(function (marker) {
         marker.setVisible(false);
     }, this);
 }
 
 function mostrarTweets() {
-    tweetMarkers.forEach(function(marker) {
+    tweetMarkers.forEach(function (marker) {
         marker.setVisible(true);
     }, this);
 }
@@ -160,13 +160,13 @@ function ocultarTweetCount() {
 }
 
 function ocultarTrends() {
-    trendMarkers.forEach(function(marker) {
+    trendMarkers.forEach(function (marker) {
         marker.setVisible(false);
     }, this);
 }
 
 function mostrarTrends() {
-    trendMarkers.forEach(function(marker) {
+    trendMarkers.forEach(function (marker) {
         marker.setVisible(true);
     }, this);
 }
@@ -177,6 +177,7 @@ function buscarTweets() {
 }
 
 function searchCity(map) {
+    mostrarSpinner();
     var north = map.getBounds().getNorthEast().lat();
     var east = map.getBounds().getNorthEast().lng();
     var south = map.getBounds().getSouthWest().lat();
@@ -184,7 +185,7 @@ function searchCity(map) {
     $.ajax({
         url: "http://api.geonames.org/citiesJSON?north=" + north + "&south=" + south + "&east=" + east + "&west=" + west + "&maxRows=" + maxCityCount + "&username=interfacesTP",
         dataType: "jsonp",
-        success: function(data) {
+        success: function (data) {
             for (var city in data.geonames) {
                 var city = data.geonames[city];
                 //var radio = (Math.sqrt(city.population) / 10); UNA FORMA
@@ -198,14 +199,32 @@ function searchCity(map) {
                 });
                 getTweetsByLocation(cityCenter, radio, 10);
             }
+        },
+        complete: function () {
+            ocultarSpinner();
         }
     });
 }
-
+function ocultarSpinner() {
+    $("#spriteLoading").removeClass("volarYbounceAdentro").addClass("volarYbounceAfuera");
+    $("#textLoading").removeClass("bounceAdentro").addClass("bounceAfuera");
+    $("#textLoading").one("webkitTransitionEnd animationend oTransitionEnd msTransitionEnd transitionend",
+        function (event) {
+            $(this).hide();
+            $("#spriteLoading").hide();
+        }
+    );
+}
+function mostrarSpinner() {
+    $("#spriteLoading").show();
+    $("#textLoading").show();
+    $("#spriteLoading").removeClass("volarYbounceAfuera").addClass("volarYbounceAdentro");
+    $("#textLoading").removeClass("bounceAfuera").addClass("bounceAdentro");
+}
 function tweetPopup(tweet, map, marker) {
     var infowindow = new google.maps.InfoWindow;
-    google.maps.event.addListener(marker, 'click', (function(marker, tweet, infowindow) {
-        return function() {
+    google.maps.event.addListener(marker, 'click', (function (marker, tweet, infowindow) {
+        return function () {
 
             closeInfos();
             map.setCenter(marker.getPosition());
@@ -214,7 +233,7 @@ function tweetPopup(tweet, map, marker) {
             $.ajax({
                 url: "https://publish.twitter.com/oembed?url=" + urlTweet + "&hide_media=true&hide_thread=true&omit_script=true",
                 dataType: "jsonp",
-                success: function(data) {
+                success: function (data) {
                     infowindow.setContent(data.html);
                     infowindow.open(map, marker);
                     var iwindow = document.getElementsByClassName("gm-style-iw");
@@ -259,7 +278,7 @@ function crearMarcador(lat, lng, tweet, city) {
         position: new google.maps.LatLng(lat, lng),
         //animation: google.maps.Animation.BOUNCE,
         icon: 'twitter-logo.png'
-            // title: hashtags[0]
+        // title: hashtags[0]
     });
     city.tweetMarker.push(marker);
     console.log(city);
@@ -280,7 +299,7 @@ function closeInfos() {
 }
 
 function crearMarkerTweetCount(city) {
-  var cssClass = "tweetMarkerCountPoco";
+    var cssClass = "tweetMarkerCountPoco";
     var marker = new MarkerWithLabel({
         position: new google.maps.LatLng(city.latLng.lat, city.latLng.lng),
         draggable: false,
@@ -301,9 +320,9 @@ function crearMarkerTweetCount(city) {
 }
 
 function actualizarContador(city) {
-  var cssClass = "plagioTrendsMapChico";
-      cssClass = "plagioTrendsMapMediano"
-      cssClass = "plagioTrendsMapGrande"
+    var cssClass = "plagioTrendsMapChico";
+    cssClass = "plagioTrendsMapMediano"
+    cssClass = "plagioTrendsMapGrande"
 
     if (map.getZoom() < 8 || map.getZoom() > 10) {
         city.tweetCountMarker.setVisible(false);
@@ -312,13 +331,13 @@ function actualizarContador(city) {
         if (count > 0) {
             city.tweetCountMarker.setLabel(count.toString());
             city.tweetCountMarker.setVisible(true);
-            if(count > 15){
-              city.tweetCountMarker.set('labelClass',"tweetMarkerCountMedio");
-              city.tweetCountMarker.set('labelAnchor', new google.maps.Point(20, 20));
+            if (count > 15) {
+                city.tweetCountMarker.set('labelClass', "tweetMarkerCountMedio");
+                city.tweetCountMarker.set('labelAnchor', new google.maps.Point(20, 20));
             }
-            if(count > 25){
-              city.tweetCountMarker.set('labelClass',"tweetMarkerCountMucho");
-              city.tweetCountMarker.set('labelAnchor', new google.maps.Point(30, 30));
+            if (count > 25) {
+                city.tweetCountMarker.set('labelClass', "tweetMarkerCountMucho");
+                city.tweetCountMarker.set('labelAnchor', new google.maps.Point(30, 30));
             }
         } else {
             city.tweetCountMarker.setVisible(false);
