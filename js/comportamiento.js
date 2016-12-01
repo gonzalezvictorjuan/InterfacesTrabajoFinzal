@@ -46,3 +46,9 @@ function ocultarError() {
 function crearNavLateral(name, volument, url) {
     $("#navTrends").append("<li><a href='" + url + "' target='_blank'>" + name + " - " + volument + "</a></li>");
 }
+
+$("#main-nav").find("a").on("click",function(){
+  $("#main-nav").removeClass();
+  $("#ShadowLayer").removeClass("is-visible");
+  $("#cd-main-content").removeClass();
+ });
