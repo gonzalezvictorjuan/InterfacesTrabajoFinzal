@@ -255,7 +255,7 @@ function tweetPopup(tweet, map, marker) {
         return function () {
 
             closeInfos();
-            var latLng = new google.maps.LatLng({lat: ((marker.getPosition().lat())+0.02), lng: marker.getPosition().lng()});
+            var latLng = new google.maps.LatLng({lat: ((marker.getPosition().lat())+0.01), lng: marker.getPosition().lng()});
             map.setCenter(latLng);
 
             var urlTweet = "https%3A%2F%2Ftwitter.com%2FInterior%2Fstatus%2F" + tweet.id_str;
