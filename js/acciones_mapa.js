@@ -70,6 +70,7 @@ function initialize() {
     //map.addListener('center_changed',accionCambioCentro);
     addYourLocationButton(map);
     initAutocomplete();
+    cargarTrendsMundiales();
 }
 
 function actualizarDatos() {
