@@ -317,7 +317,7 @@ function crearMarkerTweetCount(city) {
             scale: 0 //tamaño del marker real, le pongo 0 y así no se ve.
         },
         labelInBackground: true,
-        labelAnchor: new google.maps.Point(17.5, 17.5),
+        labelAnchor: new google.maps.Point(17.5, 19),
         labelClass: cssClass
     });
     google.maps.event.addListener(marker, 'click', function(ev) {
@@ -343,11 +343,11 @@ function actualizarContador(city) {
             city.tweetCountMarker.setVisible(true);
             if (count > 15) {
                 city.tweetCountMarker.set('labelClass', "tweetMarkerCountMedio");
-                city.tweetCountMarker.set('labelAnchor', new google.maps.Point(22.5, 22.5));
+                city.tweetCountMarker.set('labelAnchor', new google.maps.Point(22.5, 24));
             }
             if (count > 25) {
                 city.tweetCountMarker.set('labelClass', "tweetMarkerCountMucho");
-                city.tweetCountMarker.set('labelAnchor', new google.maps.Point(32.5, 32.5));
+                city.tweetCountMarker.set('labelAnchor', new google.maps.Point(32.5, 34));
             }
         } else {
             city.tweetCountMarker.setVisible(false);
