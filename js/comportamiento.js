@@ -5,7 +5,7 @@ function cargarTrendsMundiales() {
     cb.__call(
         "trends_place",
         params
-    ).then(function (data) {
+    ).then(function(data) {
         console.log("Obtenidos los trends mundiales");
         var trendsOrdenadosPorVolumen = sortByVolumenVieja(data.reply[0]);
         for (var i = 0; i < 5; i++) {
@@ -15,7 +15,7 @@ function cargarTrendsMundiales() {
 
             crearNavLateral(trendName, trendVolume, trendUrl);
         }
-    }, function (err) {
+    }, function(err) {
         console.log("Error al obtener los trends mundiales");
     });
 }
@@ -30,19 +30,19 @@ function mostrarError(mensaje) {
         $("#spinner-error").show();
         $("#errorLoading").removeClass("pulseYbounceAfuera").addClass("pulseYbounceAdentro");
         $("#errorLoadingText").removeClass("bounceAfuera").addClass("bounceAdentro");
-        //alert(mensaje);
     }
 }
+
 function ocultarError() {
     $("#errorLoading").removeClass("pulseYbounceAdentro").addClass("pulseYbounceAfuera");
     $("#errorLoadingText").removeClass("bounceAdentro").addClass("bounceAfuera");
     $("#errorLoadingText").one("webkitTransitionEnd animationend oTransitionEnd msTransitionEnd transitionend",
-        function (event) {
-            // $(this).hide();
+        function(event) {
             $("#spinner-error").hide();
         }
     );
 }
+
 function crearNavLateral(name, volument, url) {
     $("#navTrends").append("<li><a href='" + url + "' target='_blank'>" + name + " - " + volument + "</a></li>");
 }

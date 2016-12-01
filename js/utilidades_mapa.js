@@ -305,9 +305,9 @@ function getRandomLocation(latitude, longitude, radiusInMeters) {
     }
 };
 
-$(".loadingText").css("left", ($(window).width() / 2)-65);
-$(".cargandoTweets").css("left", ($(window).width() / 2)-45);
-$(".cargandoTrends").css("left", ($(window).width() / 2)-45);
-$(".cargandoError").css("left", ($(window).width() / 2)-45);
-$(".cd-header").css("height",($(window).height()*10)/100);
-$("#errorLoadingText").css("left", ($(window).width() / 2)-125);
+$(".loadingText").css("left", ($(window).width() / 2) - 65);
+$(".cargandoTweets").css("left", ($(window).width() / 2) - 45);
+$(".cargandoTrends").css("left", ($(window).width() / 2) - 45);
+$(".cargandoError").css("left", ($(window).width() / 2) - 45);
+$(".cd-header").css("height", ($(window).height() * 10) / 100);
+$("#errorLoadingText").css("left", ($(window).width() / 2) - 125);

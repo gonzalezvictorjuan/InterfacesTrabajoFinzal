@@ -21,9 +21,7 @@ function login() {
                 bearer_token = reply.access_token;
             }
         }
-    ).then(function(data) {
-        //doStuff();
-    });
+    ).then(function(data) {});
 }
 
 
@@ -75,7 +73,6 @@ function getTweetsByLocation(latLngObj, radioKm, count) {
                     var radioMetros = ((radioKm * 1000) * 30) / 100;
                     var randomLoc = getRandomLocation(latLngObj.lat(), latLngObj.lng(), radioMetros);
                     crearMarcador(randomLoc.latitude, randomLoc.longitude, tweet, respuesta);
-                    //getTweetData(data.reply.statuses[tweet]);
                 }
             }
         }
@@ -107,9 +104,6 @@ function getTrendsHash(woeid, latLngObj, radio) {
         } else {
             var trendsOrdenadosPorVolumen = sortByVolumenVieja(data.reply[0]);
             for (var i = 0; i < 5; i++) {
-                // var trendName = data.reply[0].trends[i].name;
-                // var trendVolume = data.reply[0].trends[i].tweet_volume;
-                //console.log(trendName + " - " + trendVolume);
                 var trendName = trendsOrdenadosPorVolumen[i].name;
                 var trendVolume = trendsOrdenadosPorVolumen[i].tweet_volume;
                 crearMarcadorTrend(trendName, trendVolume, latLngObj, radio);
@@ -139,16 +133,12 @@ function getWOEIDByLat(latLngObj, radio) {
         "trends_closest",
         params
     ).then(function(data) {
-        //console.log("Obtenidos el woeid en " + latLngObj.lat() + " - " + latLngObj.lng());
-        console.log(data.reply);
         if (data.reply.hasOwnProperty('errors')) {
             console.log("Limite Execido de request a trends/closest");
             mostrarError("Error, intente de nuevo más tarde");
         } else {
             for (var i = 0; i < Object.keys(data.reply).length - 1; i++) {
                 var woeid = data.reply[i].woeid;
-                //console.log("WOEID"+woeid);
-                //console.log("woeid repetido: "+woeid+" => "+$.inArray(woeid, woeIDS));
                 if ($.inArray(woeid, woeIDS) == -1) {
                     woeIDS.push(woeid);
                     getTrendsHash(woeid, latLngObj, radio);
