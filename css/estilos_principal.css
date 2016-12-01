@@ -1,5 +1,6 @@
 /**************************** Estilos General*********************************/
 
+<<<<<<< HEAD
 #MyModalCF, #MyModalQS, #contactoModal {
   position: absolute;
   z-index: 10;
@@ -9,6 +10,11 @@
   z-index: -1;
 }
 
+=======
+.modal-backdrop {
+  z-index: -1;
+}
+>>>>>>> 5d51d1148605e5b7c6ba6d188ac739d8a920b613
 .cargandoTweets {
   position: absolute;
   top: 16%;
