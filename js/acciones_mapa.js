@@ -8,18 +8,17 @@ var trendMarkers = [];
 
 var ciudadesTrends = [];
 
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-}
-
-function showPosition(position) {
-    lat = position.coords.latitude;
-    long = position.coords.longitude;
-    initialize();
+function getUserLocationIP() {
+    var latlngArr;
+    var result;
+    $.get("http://ipinfo.io", function(response) {
+        latlngArr = response.loc.split(',');
+        console.log("Obtenida la locacion del usuario por IP");
+    }, "jsonp").done(function(e) {
+        lat = latlngArr[0],
+        long = latlngArr[1]
+        initialize();
+    });
 }
 
 function initialize() {
@@ -63,6 +62,8 @@ function initialize() {
     marker.setMap(map);*/
 
     /***************Prueba Eventos**************/
+    google.maps.event.addListenerOnce(map, 'idle', actualizarDatos);
+    //actualizarDatos();
     map.addListener('zoom_changed', actualizarDatos);
     //map.addListener('bounds_changed', accionCambioBound);
     map.addListener('dragend', actualizarDatos);
@@ -104,7 +105,7 @@ function buscarTrends() {
     $.ajax({
         url: "http://api.geonames.org/citiesJSON?north=" + north + "&south=" + south + "&east=" + east + "&west=" + west + "&maxRows=" + 5 + "&username=interfacesTP",
         dataType: "jsonp",
-        success: function (data) {
+        success: function(data) {
             console.log(data);
             for (var city in data.geonames) {
                 var city = data.geonames[city];
@@ -140,13 +141,13 @@ function esCiudadRepetida(latlngCity) {
 }
 
 function ocultarTweets() {
-    tweetMarkers.forEach(function (marker) {
+    tweetMarkers.forEach(function(marker) {
         marker.setVisible(false);
     }, this);
 }
 
 function mostrarTweets() {
-    tweetMarkers.forEach(function (marker) {
+    tweetMarkers.forEach(function(marker) {
         marker.setVisible(true);
     }, this);
 }
@@ -160,13 +161,13 @@ function ocultarTweetCount() {
 }
 
 function ocultarTrends() {
-    trendMarkers.forEach(function (marker) {
+    trendMarkers.forEach(function(marker) {
         marker.setVisible(false);
     }, this);
 }
 
 function mostrarTrends() {
-    trendMarkers.forEach(function (marker) {
+    trendMarkers.forEach(function(marker) {
         marker.setVisible(true);
     }, this);
 }
@@ -185,7 +186,7 @@ function searchCity(map) {
     $.ajax({
         url: "http://api.geonames.org/citiesJSON?north=" + north + "&south=" + south + "&east=" + east + "&west=" + west + "&maxRows=" + maxCityCount + "&username=interfacesTP",
         dataType: "jsonp",
-        success: function (data) {
+        success: function(data) {
             for (var city in data.geonames) {
                 var city = data.geonames[city];
                 //var radio = (Math.sqrt(city.population) / 10); UNA FORMA
@@ -200,31 +201,34 @@ function searchCity(map) {
                 getTweetsByLocation(cityCenter, radio, 10);
             }
         },
-        complete: function () {
+        complete: function() {
             // ocultarSpinner();
         }
     });
 }
+
 function ocultarSpinner() {
     $("#spriteLoading").removeClass("volarYbounceAdentro").addClass("volarYbounceAfuera");
     $("#textLoading").removeClass("bounceAdentro").addClass("bounceAfuera");
     $("#textLoading").one("webkitTransitionEnd animationend oTransitionEnd msTransitionEnd transitionend",
-        function (event) {
+        function(event) {
             $(this).hide();
             $("#spriteLoading").hide();
         }
     );
 }
+
 function mostrarSpinner() {
     $("#spriteLoading").show();
     $("#textLoading").show();
     $("#spriteLoading").removeClass("volarYbounceAfuera").addClass("volarYbounceAdentro");
     $("#textLoading").removeClass("bounceAfuera").addClass("bounceAdentro");
 }
+
 function tweetPopup(tweet, map, marker) {
     var infowindow = new google.maps.InfoWindow;
-    google.maps.event.addListener(marker, 'click', (function (marker, tweet, infowindow) {
-        return function () {
+    google.maps.event.addListener(marker, 'click', (function(marker, tweet, infowindow) {
+        return function() {
 
             closeInfos();
             map.setCenter(marker.getPosition());
@@ -233,7 +237,7 @@ function tweetPopup(tweet, map, marker) {
             $.ajax({
                 url: "https://publish.twitter.com/oembed?url=" + urlTweet + "&hide_media=true&hide_thread=true&omit_script=true",
                 dataType: "jsonp",
-                success: function (data) {
+                success: function(data) {
                     infowindow.setContent(data.html);
                     infowindow.open(map, marker);
                     var iwindow = document.getElementsByClassName("gm-style-iw");
@@ -278,7 +282,7 @@ function crearMarcador(lat, lng, tweet, city) {
         position: new google.maps.LatLng(lat, lng),
         //animation: google.maps.Animation.BOUNCE,
         icon: 'twitter-logo.png'
-        // title: hashtags[0]
+            // title: hashtags[0]
     });
     city.tweetMarker.push(marker);
     console.log(city);
@@ -314,17 +318,17 @@ function crearMarkerTweetCount(city) {
         labelAnchor: new google.maps.Point(15, 15),
         labelClass: cssClass
     });
-    google.maps.event.addListener(marker, 'click', function(ev){
-      visualizarTweets(marker);
+    google.maps.event.addListener(marker, 'click', function(ev) {
+        visualizarTweets(marker);
     });
     city.tweetCountMarker = marker;
     city.tweetCountMarker.setMap(map);
     city.tweetCountMarker.setVisible(false);
 }
 
-function visualizarTweets(marker){
-  map.panTo(marker.position);
-  map.setZoom(12);
+function visualizarTweets(marker) {
+    map.panTo(marker.position);
+    map.setZoom(12);
 }
 
 function actualizarContador(city) {
@@ -353,4 +357,4 @@ function actualizarContador(city) {
     }
 }
 
-google.maps.event.addDomListener(window, 'load', getLocation);
+google.maps.event.addDomListener(window, 'load', getUserLocationIP);
