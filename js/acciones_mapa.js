@@ -295,9 +295,17 @@ function crearMarkerTweetCount(city) {
         labelAnchor: new google.maps.Point(15, 15),
         labelClass: cssClass
     });
+    google.maps.event.addListener(marker, 'click', function(ev){
+      visualizarTweets(marker);
+    });
     city.tweetCountMarker = marker;
     city.tweetCountMarker.setMap(map);
     city.tweetCountMarker.setVisible(false);
+}
+
+function visualizarTweets(marker){
+  map.panTo(marker.position);
+  map.setZoom(12);
 }
 
 function actualizarContador(city) {
