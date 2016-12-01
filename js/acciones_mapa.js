@@ -37,38 +37,10 @@ function initialize() {
 
     map = new google.maps.Map(document.getElementById("zona_mapa"), mapOptions);
 
-    /************Prueba MARCADORES***************/
-    /*Prueba marcador circulo*/
-    /*var myCity = new google.maps.Circle({
-    	center: latlng,
-    	radius: 120000,
-    	strokeColor: "#0000FF",
-    	strokeOpacity: 0.8,
-    	strokeWeight: 2,
-    	fillColor: "#0000FF",
-    	fillOpacity: 0.4
-    });
-    myCity.setMap(map);*/
-    /*Marcador twitter prueba*/
-
-    /* Marcador animado
-  				var marker = new google.maps.Marker({
-    				position:latlng,
-    				animation:google.maps.Animation.BOUNCE
-    			});
-  				marker.setMap(map);*/
-    /* Marcador común
-    var marker = new google.maps.Marker({position: latlng});
-    marker.setMap(map);*/
-
-    /***************Prueba Eventos**************/
     google.maps.event.addListenerOnce(map, 'idle', actualizarDatos);
-    //actualizarDatos();
     map.addListener('zoom_changed', actualizarDatos);
-    //map.addListener('bounds_changed', accionCambioBound);
     map.addListener('dragend', actualizarDatos);
     map.addListener('click', closeInfos);
-    //map.addListener('center_changed',accionCambioCentro);
     addYourLocationButton(map);
     initAutocomplete();
     cargarTrendsMundiales();
@@ -97,7 +69,7 @@ function actualizarDatos() {
 }
 
 function buscarTrends() {
-    console.log("buscando trends");
+    console.log("Buscando trends");
     mostrarSpinnerTrends();
     var center = map.getCenter();
     var north = map.getBounds().getNorthEast().lat();
@@ -111,7 +83,8 @@ function buscarTrends() {
         success: function(data) {
             console.log(data);
             if (data.hasOwnProperty('status')) {
-                mostrarError("Error al obtener las ciudades :(");
+                console.log("Error al obtener las ciudades");
+                mostrarError("Error, intente de nuevo más tarde");
             } else {
                 for (var city in data.geonames) {
                     var city = data.geonames[city];
@@ -140,7 +113,7 @@ function esCiudadRepetida(latlngCity) {
         var city = ciudadesTrends[i];
         if ((latlngCity.lat() === city.lat) && (latlngCity.lng() === city.lng)) {
             resp = true;
-            console.info("ciudad Repetida ");
+            console.info("Ciudad Repetida ");
             console.info(city);
             console.info(latlngCity);
         }
@@ -196,7 +169,8 @@ function searchCity(map) {
         dataType: "jsonp",
         success: function(data) {
             if (data.hasOwnProperty('status')) {
-                mostrarError("Error al obtener las ciudades :(");
+                console.log("Error al obtener las ciudades");
+                mostrarError("Error, intente de nuevo más tarde");
             } else {
                 for (var city in data.geonames) {
                     var city = data.geonames[city];
@@ -309,13 +283,9 @@ function crearMarcadorTrend(trendName, trendVolume, latLngObj, radio) {
 }
 
 function crearMarcador(lat, lng, tweet, city) {
-    //console.log("Se crea un marcador");
-    // var cords = {lat: lat, lng: lng}
     var marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, lng),
-        //animation: google.maps.Animation.BOUNCE,
         icon: 'twitter-logo.png'
-        // title: hashtags[0]
     });
     city.tweetMarker.push(marker);
     console.log(city);
@@ -346,7 +316,6 @@ function crearMarkerTweetCount(city) {
             path: google.maps.SymbolPath.CIRCLE, //el path es obligatorio, pero da igual lo que pongamos porque no se va a ver.
             scale: 0 //tamaño del marker real, le pongo 0 y así no se ve.
         },
-        //labelContent: trendName, // + " - " + trendVolume + cssClass,
         labelInBackground: true,
         labelAnchor: new google.maps.Point(17.5, 17.5),
         labelClass: cssClass

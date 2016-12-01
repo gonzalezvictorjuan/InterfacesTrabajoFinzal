@@ -16,7 +16,7 @@ function cargarTrendsMundiales() {
             crearNavLateral(trendName, trendVolume, trendUrl);
         }
     }, function (err) {
-        console.log("error al obtener los trends mundiales");
+        console.log("Error al obtener los trends mundiales");
     });
 }
 
@@ -46,4 +46,3 @@ function ocultarError() {
 function crearNavLateral(name, volument, url) {
     $("#navTrends").append("<li><a href='" + url + "' target='_blank'>" + name + " - " + volument + "</a></li>");
 }
-

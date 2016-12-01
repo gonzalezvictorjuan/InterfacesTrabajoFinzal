@@ -63,7 +63,8 @@ function getTweetsByLocation(latLngObj, radioKm, count) {
         params
     ).then(function(data) {
         if (data.reply.hasOwnProperty('errors')) {
-            mostrarError("Limite Execido de request a search/tweets");
+            console.log("Limite Execido de request a search/tweets")
+            mostrarError("Error, intente de nuevo más tarde");
         } else {
             console.log("Obtenidos los tweets en locacion");
             for (var tweet in data.reply.statuses) { //ciclo los tweets, statuses es un arreglo json de exactamente count tweets
@@ -86,7 +87,7 @@ function getTweetsByLocation(latLngObj, radioKm, count) {
         var limit = data.rate.remaining;
         calcularMaxCityCount(limit);
     }, function(err) {
-        console.log("error al botener los tweets en locacion");
+        console.log("Error al obtener los tweets en locacion");
     });
 
 }
@@ -101,7 +102,8 @@ function getTrendsHash(woeid, latLngObj, radio) {
     ).then(function(data) {
         console.log("Obtenidos los trends");
         if (data.reply.hasOwnProperty('errors')) {
-            mostrarError("Limite Execido de request a trends/place");
+            console.log("Limite Execido de request a trends/place");
+            mostrarError("Error, intente de nuevo más tarde");
         } else {
             var trendsOrdenadosPorVolumen = sortByVolumenVieja(data.reply[0]);
             for (var i = 0; i < 5; i++) {
@@ -115,7 +117,7 @@ function getTrendsHash(woeid, latLngObj, radio) {
         }
         ocultarSpinnerTrends();
     }, function(err) {
-        console.log("error al obtener los trends");
+        console.log("Error al obtener los trends");
     });
 }
 
@@ -140,7 +142,8 @@ function getWOEIDByLat(latLngObj, radio) {
         //console.log("Obtenidos el woeid en " + latLngObj.lat() + " - " + latLngObj.lng());
         console.log(data.reply);
         if (data.reply.hasOwnProperty('errors')) {
-            mostrarError("Limite Execido de request a trends/closest");
+            console.log("Limite Execido de request a trends/closest");
+            mostrarError("Error, intente de nuevo más tarde");
         } else {
             for (var i = 0; i < Object.keys(data.reply).length - 1; i++) {
                 var woeid = data.reply[i].woeid;
@@ -150,11 +153,11 @@ function getWOEIDByLat(latLngObj, radio) {
                     woeIDS.push(woeid);
                     getTrendsHash(woeid, latLngObj, radio);
                 } else {
-                    console.log("repetido " + woeid);
+                    console.log("Repetido " + woeid);
                 }
             }
         }
     }, function(err) {
-        console.log("error al obtener los trends");
+        console.log("Error al obtener los trends");
     });
 }

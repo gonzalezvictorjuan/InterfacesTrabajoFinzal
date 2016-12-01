@@ -176,6 +176,7 @@
 .tweetMarkerCountPoco {
   width: 35px;
   height: 35px;
+  margin-top: 5px;
   background-image: url("images/twitterMarkerCount.png");
 }
 
