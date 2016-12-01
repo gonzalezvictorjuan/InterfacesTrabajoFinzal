@@ -26,41 +26,6 @@ function login() {
     });
 }
 
-//esta funcion esta asi de fea para debugear que habia en los tweets, basicamente extrae la info del json de cada tweet, llamada desde getTweetsByLocation
-function getTweetData(tweetJson) {
-    var id = tweetJson.id;
-    var hashtagsArr = $.map(tweetJson.entities.hashtags, function(el) {
-        return el;
-    }); //esto mapea un arreglo json a un arreglo javascript
-    var geo = tweetJson.geo;
-    var coordinates = tweetJson.coordinates;
-    var place = tweetJson.place;
-
-    console.log("Tweet ID " + id);
-    for (var i = 0; i < hashtagsArr.length; i++) { //listo los hashtags
-        console.log("Tweet hash " + hashtagsArr[i].text);
-    }
-    console.log("Tweet geo " + geo); //esto todavia no se que tiene, pero casi ningun tweet tiene esto
-    console.log("Tweet coords " + coordinates);
-    if (coordinates) {
-        var latlng = JSON.stringify(coordinates.coordinates).slice(1, -1); //le saco el primer y ultimo caracter que son [ y ]
-        var latlngArr = latlng.split(','); //parto la coma
-        crearMarcador(latlngArr[0], latlngArr[1], hashtagsArr)
-    }
-    if (place) {
-        //console.log(JSON.stringify(place));
-        var city = place.name;
-        var placeID = place.id;
-        var country = place.country;
-        var boundingBoxJson = place.bounding_box.coordinates[0];
-        console.log("Ciudad " + city);
-        console.log("PlaceID " + placeID);
-        console.log("pais " + country);
-        console.log("bounding_box " + JSON.stringify(boundingBoxJson));
-    }
-
-}
-
 
 function buscarCiudadMaxId(latLng, id) {
     var resp;
