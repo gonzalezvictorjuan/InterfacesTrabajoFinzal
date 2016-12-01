@@ -110,7 +110,7 @@ function buscarTrends() {
         success: function(data) {
             console.log(data);
             if (data.hasOwnProperty('status')) {
-                alert(data.status.message);
+                mostrarError(data.status.message);
             }
             for (var city in data.geonames) {
                 var city = data.geonames[city];
