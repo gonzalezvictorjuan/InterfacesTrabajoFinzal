@@ -54,6 +54,10 @@ $("#main-nav").find("a").on("click",function(){
  });
 
 
-$(".qs").on("click",function(){$('#MyModalQS').modal('show')});
-$(".cont").on("click",function(){$('#contactoModal').modal('show')});
-$(".cf").on("click",function(){$('#MyModalCF').modal('show')});
+$(".qs").on("click",function(){
+  $('#MyModalQS').modal('show');
+  console.log('#MyModalQS');
+});
+$(".cont").on("click",function(){$('#contactoModal').modal('show');});
+$(".cf").on("click",function(){$('#MyModalCF').modal('show');
+  console.log('#MyModalCF');});
