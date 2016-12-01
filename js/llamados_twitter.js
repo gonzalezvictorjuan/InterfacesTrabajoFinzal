@@ -62,16 +62,20 @@ function getTweetsByLocation(latLngObj, radioKm, count) {
         "search_tweets",
         params
     ).then(function(data) {
-        console.log("Obtenidos los tweets en locacion");
-        for (var tweet in data.reply.statuses) { //ciclo los tweets, statuses es un arreglo json de exactamente count tweets
-            var tweet = data.reply.statuses[tweet];
-            if (tweet.geo) {
-                crearMarcador(tweet.geo.coordinates[0], tweet.geo.coordinates[1], tweet, respuesta);
-            } else {
-                var radioMetros = ((radioKm * 1000) * 30) / 100;
-                var randomLoc = getRandomLocation(latLngObj.lat(), latLngObj.lng(), radioMetros);
-                crearMarcador(randomLoc.latitude, randomLoc.longitude, tweet, respuesta);
-                //getTweetData(data.reply.statuses[tweet]);
+        if (data.reply.hasOwnProperty('errors')) {
+            mostrarError("Limite Execido de request a search/tweets");
+        } else {
+            console.log("Obtenidos los tweets en locacion");
+            for (var tweet in data.reply.statuses) { //ciclo los tweets, statuses es un arreglo json de exactamente count tweets
+                var tweet = data.reply.statuses[tweet];
+                if (tweet.geo) {
+                    crearMarcador(tweet.geo.coordinates[0], tweet.geo.coordinates[1], tweet, respuesta);
+                } else {
+                    var radioMetros = ((radioKm * 1000) * 30) / 100;
+                    var randomLoc = getRandomLocation(latLngObj.lat(), latLngObj.lng(), radioMetros);
+                    crearMarcador(randomLoc.latitude, randomLoc.longitude, tweet, respuesta);
+                    //getTweetData(data.reply.statuses[tweet]);
+                }
             }
         }
         ocultarSpinnerTweet();

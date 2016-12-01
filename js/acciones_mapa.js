@@ -75,6 +75,7 @@ function initialize() {
 }
 
 function actualizarDatos() {
+    ocultarError();
     var zoom = map.getZoom();
     console.log(zoom);
     if (zoom < 8) {
@@ -110,21 +111,22 @@ function buscarTrends() {
         success: function(data) {
             console.log(data);
             if (data.hasOwnProperty('status')) {
-                mostrarError(data.status.message);
-            }
-            for (var city in data.geonames) {
-                var city = data.geonames[city];
-                ciudadesTrends.push(city);
-                var radio = ((city.population) * 0.025) / 100;
-                if (radio === 0) {
-                    radio = 5;
-                }
-                var cityCenter = new google.maps.LatLng({
-                    lat: city.lat,
-                    lng: city.lng
-                });
-                if (!esCiudadRepetida(cityCenter)) {
-                    getWOEIDByLat(cityCenter, 30000);
+                mostrarError("Error al obtener las ciudades :(");
+            } else {
+                for (var city in data.geonames) {
+                    var city = data.geonames[city];
+                    ciudadesTrends.push(city);
+                    var radio = ((city.population) * 0.025) / 100;
+                    if (radio === 0) {
+                        radio = 5;
+                    }
+                    var cityCenter = new google.maps.LatLng({
+                        lat: city.lat,
+                        lng: city.lng
+                    });
+                    if (!esCiudadRepetida(cityCenter)) {
+                        getWOEIDByLat(cityCenter, 30000);
+                    }
                 }
             }
 
@@ -193,18 +195,22 @@ function searchCity(map) {
         url: "http://api.geonames.org/citiesJSON?north=" + north + "&south=" + south + "&east=" + east + "&west=" + west + "&maxRows=" + maxCityCount + "&username=interfacesTP",
         dataType: "jsonp",
         success: function(data) {
-            for (var city in data.geonames) {
-                var city = data.geonames[city];
-                //var radio = (Math.sqrt(city.population) / 10); UNA FORMA
-                var radio = ((city.population) * 0.025) / 100;
-                if (radio === 0) {
-                    radio = 5;
+            if (data.hasOwnProperty('status')) {
+                mostrarError("Error al obtener las ciudades :(");
+            } else {
+                for (var city in data.geonames) {
+                    var city = data.geonames[city];
+                    //var radio = (Math.sqrt(city.population) / 10); UNA FORMA
+                    var radio = ((city.population) * 0.025) / 100;
+                    if (radio === 0) {
+                        radio = 5;
+                    }
+                    var cityCenter = new google.maps.LatLng({
+                        lat: city.lat,
+                        lng: city.lng
+                    });
+                    getTweetsByLocation(cityCenter, radio, 10);
                 }
-                var cityCenter = new google.maps.LatLng({
-                    lat: city.lat,
-                    lng: city.lng
-                });
-                getTweetsByLocation(cityCenter, radio, 10);
             }
         },
         complete: function() {
