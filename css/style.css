@@ -95,8 +95,8 @@ Main components
 
 #cd-intro h1{
   position: fixed;
-  width: 100%;
-  left: 125px;
+  width: 15%;
+  left: 12%;
   top: 5%;
   bottom: auto;
 
@@ -141,8 +141,9 @@ Main components
   }
 }
 
-.cd-blurred-bg {
-  /* we use jQuery to apply a mask to this element - CSS clip property */
+/* we use jQuery to apply a mask to this element - CSS clip property */
+/*.cd-blurred-bg {
+
   position: absolute;
   top: 0px;
   left: 0;
@@ -152,14 +153,16 @@ Main components
   background-size: cover;
   -webkit-filter: blur(4px);
   filter: blur(4px);
-}
+}*/
+
+
 .no-js .cd-blurred-bg {
   display: none;
 }
 
 #cd-logo {
   position: relative;
-  left: 12px;
+  left: 5%;
   top: 5px;
   max-width: 40px;
   max-height: 40px;
