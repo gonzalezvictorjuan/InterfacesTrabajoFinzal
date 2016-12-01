@@ -16,7 +16,7 @@
   position: absolute;
   left: 50%;
   top: 10%;
-  z-index:10; 
+  z-index:10;
   background: url("../img/hashtag-spin.png");
   width: 90px;
   height: 90px;
@@ -24,6 +24,8 @@
 }
 
 .loadingText{
+  color: #FFFFFF;
+  font-weight: bold;
   position: absolute;
   left: 50%;
   top: 25%;
@@ -165,6 +167,7 @@
   height: 45px;
   background-image: url("images/twitterMarkerCount.png");
   background-size: contain;
+  -webkit-filter: brightness(120%) saturate(300%) hue-rotate(180deg);
   filter: brightness(120%) saturate(300%) hue-rotate(180deg);
 }
 
@@ -173,6 +176,7 @@
   height: 65px;
   background-image: url("images/twitterMarkerCount.png");
   background-size: contain;
+  -webkit-filter: brightness(30%) saturate(600%) hue-rotate(180deg);
   filter: brightness(30%) saturate(600%) hue-rotate(180deg);
 }
 
