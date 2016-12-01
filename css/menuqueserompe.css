@@ -41,7 +41,7 @@ label:focus {
 .menu ul li > label {
   background: url(https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-arrow-right-b-128.png) 95% 50%/16px 16px no-repeat;
 }
-.menu ul li a, .menu ul li label,.menu ul li span {
+.menu ul li a, .menu ul li label,.menu ul li span, .menu ul li hr{
   display: block;
   text-align: center;
   padding: 0 20px;
@@ -50,7 +50,8 @@ label:focus {
   color: #000;
 }
 
-/*.menu ul li span {}*/
+.menu ul li span {font-size: 25px;}
+
 .menu ul li a:hover, .menu ul li label:hover {
   color: #666;
 }
