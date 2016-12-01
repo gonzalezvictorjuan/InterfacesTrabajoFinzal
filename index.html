@@ -65,7 +65,7 @@
 	<nav id="main-nav">
 		<ul>
 <!-- 5 en total -->
-			<li><a id="ModalQS" href="#modal-containerQS" role="button" class="btn" data-toggle="modal"><span>Quienes Somos</span></a></li>
+			<li><a data-toggle="modal" data-target="#MyModalQS" href="#"><span>Quienes Somos</span></a></li>
 
 			<li><a><span>Contacto</span></a></li>
 			<li><a><span>Como Funciona</span></a></li>
@@ -75,28 +75,30 @@
 	</nav>
 
 <!-- ModalQuienesSomos -->
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="modal fade" id="modal-containerQS" role="dialog" aria-labelledby="ModalQS" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-								×
-							</button>
-							<h4 class="modal-title" id="ModalQSLabel">
-								Quienes Somos
-							</h4>
-						</div>
-						<div class="modal-body">
-							texto
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="modal fade" id="MyModalQS" role="dialog">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">QuienesSomos:</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="container-fluid">
+          <div class="row">
+
+            <div class="col-md-12">
+								<p>text</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 
