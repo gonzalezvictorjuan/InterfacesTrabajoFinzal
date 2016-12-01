@@ -21,5 +21,5 @@ function cargarTrendsMundiales() {
 }
 
 function crearNavLateral(name,volument, url){
-    $("#navTrends").append("<li><a href='"+url+"'>"+name+" - "+volument+"</a></li>");
+    $("#navTrends").append("<li><a href='"+url+"' target='_blank'>"+name+" - "+volument+"</a></li>");
 }
