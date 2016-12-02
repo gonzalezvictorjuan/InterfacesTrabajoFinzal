@@ -106,7 +106,8 @@ function getTrendsHash(woeid, latLngObj, radio) {
             for (var i = 0; i < 5; i++) {
                 var trendName = trendsOrdenadosPorVolumen[i].name;
                 var trendVolume = trendsOrdenadosPorVolumen[i].tweet_volume;
-                crearMarcadorTrend(trendName, trendVolume, latLngObj, radio);
+                var trendUrl = trendsOrdenadosPorVolumen[i].url;
+                crearMarcadorTrend(trendName, trendVolume, trendUrl, latLngObj, radio);
             }
         }
         ocultarSpinnerTrends();

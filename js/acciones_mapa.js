@@ -252,7 +252,7 @@ function tweetPopup(tweet, map, marker) {
     })(marker, tweet, infowindow));
 }
 
-function crearMarcadorTrend(trendName, trendVolume, latLngObj, radio) {
+function crearMarcadorTrend(trendName, trendVolume, trendUrl, latLngObj, radio) {
     var cssClass = "plagioTrendsMapChico";
     if (trendVolume > 15000)
         cssClass = "plagioTrendsMapMediano"
@@ -275,6 +275,9 @@ function crearMarcadorTrend(trendName, trendVolume, latLngObj, radio) {
     });
     trendMarkers.push(marker);
     marker.setMap(map);
+    google.maps.event.addListener(marker, 'click', (function(){
+      window.open(trendUrl, '_blank');
+    }));
 }
 
 function crearMarcador(lat, lng, tweet, city) {

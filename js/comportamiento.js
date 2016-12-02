@@ -1,3 +1,5 @@
+var parar = true;
+
 function cargarTrendsMundiales() {
     var params = {
         id: 1
@@ -8,11 +10,12 @@ function cargarTrendsMundiales() {
     ).then(function(data) {
         console.log("Obtenidos los trends mundiales");
         var trendsOrdenadosPorVolumen = sortByVolumenVieja(data.reply[0]);
+        $("#navTrends").empty();
+        $("#navTrends").append("<li><span>Trends Mundiales</span></li><hr></hr>");
         for (var i = 0; i < 5; i++) {
             var trendName = trendsOrdenadosPorVolumen[i].name;
             var trendVolume = trendsOrdenadosPorVolumen[i].tweet_volume;
             var trendUrl = trendsOrdenadosPorVolumen[i].url;
-
             crearNavLateral(trendName, trendVolume, trendUrl);
         }
     }, function(err) {
@@ -20,6 +23,11 @@ function cargarTrendsMundiales() {
     });
 }
 
+function crearNavLateral(name, volument, url) {
+    $("#navTrends").append("<li><a href='" + url + "' target='_blank'>" + name + " - " + volument + "</a></li>");
+}
+
+var refrescarTrend = setInterval(cargarTrendsMundiales, 60000);
 
 function mostrarError(mensaje) {
     if (!$("#spinner-error").is(':visible')) {
@@ -43,21 +51,21 @@ function ocultarError() {
     );
 }
 
-function crearNavLateral(name, volument, url) {
-    $("#navTrends").append("<li><a href='" + url + "' target='_blank'>" + name + " - " + volument + "</a></li>");
-}
-
-$("#main-nav").find("a").on("click",function(){
-  $("#main-nav").removeClass();
-  $("#ShadowLayer").removeClass("is-visible");
-  $("#cd-main-content").removeClass();
- });
-
-
-$(".qs").on("click",function(){
-  $('#MyModalQS').modal('show');
-  console.log('#MyModalQS');
+$("#main-nav").find("a").on("click", function() {
+    $("#main-nav").removeClass();
+    $("#ShadowLayer").removeClass("is-visible");
+    $("#cd-main-content").removeClass();
 });
-$(".cont").on("click",function(){$('#contactoModal').modal('show');});
-$(".cf").on("click",function(){$('#MyModalCF').modal('show');
-  console.log('#MyModalCF');});
+
+
+$(".qs").on("click", function() {
+    $('#MyModalQS').modal('show');
+    console.log('#MyModalQS');
+});
+$(".cont").on("click", function() {
+    $('#contactoModal').modal('show');
+});
+$(".cf").on("click", function() {
+    $('#MyModalCF').modal('show');
+    console.log('#MyModalCF');
+});

@@ -1,225 +1,245 @@
 /**************************** Estilos General*********************************/
 
-.Titulo{font-size: 20px; font-weight:bold;}
-.Titulo2{font-size: 16px; font-weight:bold;}
-.Tab{padding-left: 5px;}
+.Titulo {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.Titulo2 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.Tab {
+    padding-left: 5px;
+}
 
 #MyModalCF, #MyModalQS, #contactoModal {
-  position: absolute;
-  z-index: 10;
+    position: absolute;
+    z-index: 10;
 }
 
 .modal-backdrop {
-  z-index: -1;
+    z-index: -1;
 }
 
 .cargandoTweets {
-  position: absolute;
-  top: 16%;
-  z-index: 10;
-  background: url("../img/twitter-sprite2.png");
-  width: 90px;
-  height: 90px;
-  border-radius: 90px;
-  /*-moz-animation: volar 1s steps(12) infinite, bounceOutUp 1s;
+    position: absolute;
+    top: 16%;
+    z-index: 10;
+    background: url("../img/twitter-sprite2.png");
+    width: 90px;
+    height: 90px;
+    border-radius: 90px;
+    /*-moz-animation: volar 1s steps(12) infinite, bounceOutUp 1s;
 	animation: volar 1s steps(12) infinite, bounceOutUp 1s;*/
 }
 
 .cargandoTrends {
-  position: absolute;
-  top: 16%;
-  z-index: 10;
-  background: url("../img/hashtag-spin.png");
-  width: 90px;
-  height: 90px;
-  border-radius: 90px;
+    position: absolute;
+    top: 16%;
+    z-index: 10;
+    background: url("../img/hashtag-spin.png");
+    width: 90px;
+    height: 90px;
+    border-radius: 90px;
 }
 
 .cargandoError {
-  position: absolute;
-  top: 16%;
-  z-index: 10;
-  background: url("../img/error.png");
-  box-shadow: 0 0 0 0 rgba(232, 76, 61, 0.7);
-  width: 90px;
-  height: 90px;
-  border-radius: 90px;
+    position: absolute;
+    top: 16%;
+    z-index: 10;
+    background: url("../img/error.png");
+    box-shadow: 0 0 0 0 rgba(232, 76, 61, 0.7);
+    width: 90px;
+    height: 90px;
+    border-radius: 90px;
 }
 
 .loadingText {
-  color: #FFFFFF;
-  font-weight: bold;
-  position: absolute;
-  top: 32%;
-  z-index: 10;
-  -moz-animation: bounceOutUp 1s;
-  animation: bounceOutUp 1s;
+    color: #FFFFFF;
+    font-weight: bold;
+    position: absolute;
+    top: 32%;
+    z-index: 10;
+    -moz-animation: bounceOutUp 1s;
+    animation: bounceOutUp 1s;
 }
 
 .bounceAdentro {
-  -moz-animation: bounceInDown 1s;
-  animation: bounceInDown 1s;
+    -moz-animation: bounceInDown 1s;
+    animation: bounceInDown 1s;
 }
 
 .pulseYbounceAdentro {
-  -moz-animation: pulses 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceInDown 1s;
-  animation: pulses 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceInDown 1s;
+    -moz-animation: pulses 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceInDown 1s;
+    animation: pulses 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceInDown 1s;
 }
 
 .pulseYbounceAfuera {
-  -moz-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceOutUp 1s;
-  animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceOutUp 1s;
+    -moz-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceOutUp 1s;
+    animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1), bounceOutUp 1s;
 }
 
 .girarYbounceAdentro {
-  -moz-animation: spin 1s infinite, bounceInDown 1s;
-  animation: spin 1s infinite, bounceInDown 1s;
+    -moz-animation: spin 1s infinite, bounceInDown 1s;
+    animation: spin 1s infinite, bounceInDown 1s;
 }
 
 .girarYbounceAfuera {
-  -moz-animation: spin 1s infinite, bounceOutUp 1s;
-  animation: spin 1s infinite, bounceOutUp 1s;
+    -moz-animation: spin 1s infinite, bounceOutUp 1s;
+    animation: spin 1s infinite, bounceOutUp 1s;
 }
 
 .volarYbounceAdentro {
-  -moz-animation: volar 1s steps(12) infinite, bounceInDown 1s;
-  animation: volar 1s steps(12) infinite, bounceInDown 1s;
+    -moz-animation: volar 1s steps(12) infinite, bounceInDown 1s;
+    animation: volar 1s steps(12) infinite, bounceInDown 1s;
 }
 
 .bounceAfuera {
-  -moz-animation: bounceOutUp 1s;
-  animation: bounceOutUp 1s;
+    -moz-animation: bounceOutUp 1s;
+    animation: bounceOutUp 1s;
 }
 
 .volarYbounceAfuera {
-  -moz-animation: volar 1s steps(12) infinite, bounceOutUp 1s;
-  animation: volar 1s steps(12) infinite, bounceOutUp 1s;
+    -moz-animation: volar 1s steps(12) infinite, bounceOutUp 1s;
+    animation: volar 1s steps(12) infinite, bounceOutUp 1s;
 }
 
 @keyframes pulses {
-  to {
-    box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);
-  }
+    to {
+        box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);
+    }
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes bounceOutUp {
-  20% {
-    -webkit-transform: translate3d(0, -10px, 0);
-    transform: translate3d(0, -10px, 0);
-  }
-  40%, 45% {
-    opacity: 1;
-    -webkit-transform: translate3d(0, 20px, 0);
-    transform: translate3d(0, 20px, 0);
-  }
-  to {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -2000px, 0);
-    transform: translate3d(0, -2000px, 0);
-  }
+    20% {
+        -webkit-transform: translate3d(0, -10px, 0);
+        transform: translate3d(0, -10px, 0);
+    }
+    40%, 45% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 20px, 0);
+        transform: translate3d(0, 20px, 0);
+    }
+    to {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -2000px, 0);
+        transform: translate3d(0, -2000px, 0);
+    }
 }
 
 @keyframes bounceInDown {
-  from, 60%, 75%, 90%, to {
-    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-  }
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -3000px, 0);
-    transform: translate3d(0, -3000px, 0);
-  }
-  60% {
-    opacity: 1;
-    -webkit-transform: translate3d(0, 25px, 0);
-    transform: translate3d(0, 25px, 0);
-  }
-  75% {
-    -webkit-transform: translate3d(0, -10px, 0);
-    transform: translate3d(0, -10px, 0);
-  }
-  90% {
-    -webkit-transform: translate3d(0, 5px, 0);
-    transform: translate3d(0, 5px, 0);
-  }
-  to {
-    -webkit-transform: none;
-    transform: none;
-  }
+    from, 60%, 75%, 90%, to {
+        -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    }
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -3000px, 0);
+        transform: translate3d(0, -3000px, 0);
+    }
+    60% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 25px, 0);
+        transform: translate3d(0, 25px, 0);
+    }
+    75% {
+        -webkit-transform: translate3d(0, -10px, 0);
+        transform: translate3d(0, -10px, 0);
+    }
+    90% {
+        -webkit-transform: translate3d(0, 5px, 0);
+        transform: translate3d(0, 5px, 0);
+    }
+    to {
+        -webkit-transform: none;
+        transform: none;
+    }
 }
 
 @keyframes volar {
-  /* sprite de gomez corriendo */
-  100% {
-    background-position-x: -1080px;
-  }
+    100% {
+        background-position-x: -1080px;
+    }
 }
 
 .plagioTrendsMapChico {
-  opacity: 0.62;
-  font-weight: bold;
-  background-color: #222;
-  border: 1px solid #333;
-  border-radius: 1px;
-  color: #fff;
+    opacity: 0.62;
+    font-weight: bold;
+    background-color: #222;
+    border: 1px solid #333;
+    border-radius: 1px;
+    color: #fff;
 }
 
 .plagioTrendsMapGrande {
-  font-size: 20px;
-  opacity: 0.72;
-  font-weight: bold;
-  background-color: #222;
-  border: 1px solid #333;
-  border-radius: 1px;
-  color: #fff;
+    font-size: 20px;
+    opacity: 0.72;
+    font-weight: bold;
+    background-color: #222;
+    border: 1px solid #333;
+    border-radius: 1px;
+    color: #fff;
 }
 
 .plagioTrendsMapMediano {
-  opacity: 0.82;
-  font-size: 10px;
-  font-weight: bold;
-  background-color: #222;
-  border: 1px solid #333;
-  border-radius: 1px;
-  color: #fff;
+    opacity: 0.82;
+    font-size: 10px;
+    font-weight: bold;
+    background-color: #222;
+    border: 1px solid #333;
+    border-radius: 1px;
+    color: #fff;
 }
 
 .tweetMarkerCountPoco {
-  width: 35px;
-  height: 35px;
-  margin-top: 5px;
-  background-image: url("images/twitterMarkerCount.png");
+    width: 35px;
+    height: 35px;
+    margin-top: 5px;
+    background-image: url("images/twitterMarkerCount.png");
 }
 
 .tweetMarkerCountMedio {
-  width: 45px;
-  height: 45px;
-  background-image: url("images/twitterMarkerCount.png");
-  background-size: contain;
-  -webkit-filter: brightness(120%) saturate(300%) hue-rotate(180deg);
-  filter: brightness(120%) saturate(300%) hue-rotate(180deg);
+    width: 45px;
+    height: 45px;
+    background-image: url("images/twitterMarkerCount.png");
+    background-size: contain;
+    -webkit-filter: brightness(120%) saturate(300%) hue-rotate(180deg);
+    filter: brightness(120%) saturate(300%) hue-rotate(180deg);
 }
 
 .tweetMarkerCountMucho {
-  width: 65px;
-  height: 65px;
-  background-image: url("images/twitterMarkerCount.png");
-  background-size: contain;
-  -webkit-filter: brightness(30%) saturate(600%) hue-rotate(180deg);
-  filter: brightness(30%) saturate(600%) hue-rotate(180deg);
+    width: 65px;
+    height: 65px;
+    background-image: url("images/twitterMarkerCount.png");
+    background-size: contain;
+    -webkit-filter: brightness(30%) saturate(600%) hue-rotate(180deg);
+    filter: brightness(30%) saturate(600%) hue-rotate(180deg);
 }
 
 #zona_mapa {
-  width: 100%;
-  height: 100%;
-  max-height: 100%;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+}
+
+.qs, .cont, .cf {
+    cursor: pointer;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
 }
