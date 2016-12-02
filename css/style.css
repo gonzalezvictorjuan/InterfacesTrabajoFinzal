@@ -25,14 +25,9 @@ body {
   background-color: #2e2d32;
 }
 
-a {
+a, a:hover, a:active{
   color: white;
   text-decoration: none;
-}
-
-a:hover{
-  color: white;
-	text-decoration: none;
 }
 
 

@@ -18,6 +18,10 @@ function getUserLocationIP() {
         lat = latlngArr[0],
             long = latlngArr[1]
         initialize();
+    }).fail(function() {
+        console.log("Hubo un error al identificar su posicion por su IP")
+        lat = "-37.3287999";
+        long = "-59.136716";
     });
 }
 
@@ -52,7 +56,6 @@ function actualizarDatos() {
     console.log(zoom);
     if (zoom < 8) {
         ocultarTweetCount();
-        console.log("trends");
         mostrarTrends();
         ocultarTweets();
         buscarTrends();
@@ -67,6 +70,7 @@ function actualizarDatos() {
         }
     }
 }
+
 function buscarTrends() {
     console.log("Buscando trends");
     mostrarSpinnerTrends();
@@ -79,7 +83,6 @@ function buscarTrends() {
         url: "http://api.geonames.org/citiesJSON?north=" + north + "&south=" + south + "&east=" + east + "&west=" + west + "&maxRows=" + 5 + "&username=interfacesTP",
         dataType: "jsonp",
         success: function(data) {
-            console.log(data);
             if (data.hasOwnProperty('status')) {
                 console.log("Error al obtener las ciudades");
                 mostrarError("Error, intente de nuevo más tarde");
@@ -203,10 +206,8 @@ function mostrarSpinnerTrends() {
     $("#spinner-trends").show();
     $("#trendsLoading").removeClass("girarYbounceAfuera").addClass("girarYbounceAdentro");
     $("#trendLoadingText").removeClass("bounceAfuera").addClass("bounceAdentro");
-    var loop_handle = setTimeout("ocultarSpinnerTrends();",'5000');
+    var loop_handle = setTimeout("ocultarSpinnerTrends();", '5000');
 }
-
-
 
 function ocultarSpinnerTweet() {
     $("#spriteLoading").removeClass("volarYbounceAdentro").addClass("volarYbounceAfuera");
@@ -275,8 +276,8 @@ function crearMarcadorTrend(trendName, trendVolume, trendUrl, latLngObj, radio) 
     });
     trendMarkers.push(marker);
     marker.setMap(map);
-    google.maps.event.addListener(marker, 'click', (function(){
-      window.open(trendUrl, '_blank');
+    google.maps.event.addListener(marker, 'click', (function() {
+        window.open(trendUrl, '_blank');
     }));
 }
 
@@ -286,7 +287,6 @@ function crearMarcador(lat, lng, tweet, city) {
         icon: 'img/twitter-logo.png'
     });
     city.tweetMarker.push(marker);
-    console.log(city);
     marker.setMap(map);
     tweetMarkers.push(marker);
     tweetPopup(tweet, map, marker);

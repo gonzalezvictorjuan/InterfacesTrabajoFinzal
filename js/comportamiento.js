@@ -69,3 +69,7 @@ $(".cf").on("click", function() {
     $('#MyModalCF').modal('show');
     console.log('#MyModalCF');
 });
+$(".is").on("click", function() {
+    $('#MyModalIS').modal('show');
+    console.log('#MyModalIS');
+});

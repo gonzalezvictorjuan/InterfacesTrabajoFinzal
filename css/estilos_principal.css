@@ -14,7 +14,7 @@
     padding-left: 5px;
 }
 
-#MyModalCF, #MyModalQS, #contactoModal {
+#MyModalCF, #MyModalQS, #contactoModal, #MyModalIS {
     position: absolute;
     z-index: 10;
 }
@@ -233,7 +233,7 @@
     max-height: 100%;
 }
 
-.qs, .cont, .cf {
+.qs, .cont, .cf, .is {
     cursor: pointer;
 }
 
